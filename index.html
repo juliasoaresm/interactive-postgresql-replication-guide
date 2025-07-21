@@ -4,67 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streaming Replication</title>
+    <link rel="icon" type="image/x-icon" href="capriccheIcon.png">
     <script src="script.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>Guia de Replicação Streaming PostgreSQL</h1>
-    <h3>1. Objetivo</h3>
+    <div id="titulo">
+        <h1>Guia de Replicação Streaming PostgreSQL</h1>
+    </div>
+    <div id="escopo">
+        <h3>1. Objetivo</h3>
+        
+        <p>Este documento fornece um guia passo a passo para configurar uma replicação streaming do PostgreSQL. O objetivo é criar um "Banco de Dados Espelho" (Servidor Réplica) que seja uma cópia em tempo real do banco de dados principal (Servidor Primário), utilizado pela plataforma ThingsBoard.</p>
+        
+        <h3>2. Requisitos Iniciais (Pré-requisitos)</h3>
+        <p>Antes de iniciar a instalação, garanta que você atende aos seguintes requisitos:</p>
+        <h4>2.1. Infraestrutura:</h4>
+        <p>Dois Servidores: Duas máquinas (físicas ou virtuais) distintas.</p>
+        <p>Sistemas Operacionais abordados no guia: Linux (baseado em Debian/Ubuntu) ou Windows.</p>
+        <p>Acesso de Administrador: Permissão para instalar softwares e editar configurações em ambos os servidores.</p>
+        <h4>2.2. Conectividade de Rede:</h4>
+        <p>Os dois servidores devem estar na mesma rede e conseguir se comunicar (um consegue "pingar" o outro). A porta padrão do PostgreSQL, TCP 5432, será configurada no firewall mais adiante.</p>
+        <p>Para verificar, abra o terminal do seu sistema operacional (CMD ou terminal linux) e digite "ping + IP QUE DESEJA VERIFICAR".</p>
+        <h3>3. PASSO 1: Instalação dos Softwares</h3>
+        <p>Nesta etapa, vamos instalar tudo que é necessário em ambos os servidores.</p>
+        
+        <h4>3.1. Instalação do ThingsBoard (Apenas no Servidor Primário)</h4>
+        <p>Instale o ThingsBoard no servidor que você designou como Primário. Para instruções detalhadas, consulte a documentação oficial do ThingsBoard.</p>
+        
+        <p>Instalação via Windows - https://thingsboard.io/docs/user-guide/install/windows/</p>
+        <p>Instalação via Linux - https://thingsboard.io/docs/user-guide/install/ubuntu/</p>
+        
+        <p id="OBS">(Seguindo a instalação LINUX, nela mesma já tem a instalação do postgresql e você pode pular para o item “3.3.” deste documento. Se optar pelo Windows, siga ao próximo passo.).</p>
+        <p id="OBS">OBS: SEMPRE anote suas senhas e para onde elas servem.</p>
+        <h4>3.2. Instalação do PostgreSQL (Caso opte pelo Windows)</h4>
+        <p>Instale o PostgreSQL em ambos os servidores (Primário e Réplica).</p>
+        <p>Importante: Use a mesma versão principal do PostgreSQL em ambas as máquinas.</p>
+        <h4>Instruções para Windows:</h4>
+        <p>Acesse o site oficial: https://www.postgresql.org/download/windows/</p>
+        <p>Baixe e execute o instalador.</p>
+        <p>Durante a instalação, ele pedirá para você definir uma senha para o superusuário postgres. CRIE UMA SENHA FORTE, ANOTE-A E GUARDE-A. VOCÊ PRECISARÁ DELA.</p>
+        <p>!!LEMBRE!!
+        
+        SEU POSTGRES DA MÁQUINA PRIMÁRIA TEM QUE ESTAR NA MESMA VERSÃO DO POSTGRES DA MÁQUINA DA RÉPLICA.</p>
+        <h4>3.3. Instalação do DBeaver (Altamente Recomendado)</h4>
+        <p>Instale o DBeaver em pelo menos uma das máquinas (recomendado: máquina primária) para facilitar a verificação dos dados.</p>
+        <p>Download: https://dbeaver.io/download/</p>
+        <h3>4. PASSO 2: Coleta de Informações e Preparação</h3>
+        <p>Agora que tudo está instalado, vamos coletar e definir as informações que usaremos.</p>
+        
+        <h4>Sua Ficha de Informações (Preencha agora):</h4>
+    </div>
+<div id="card">
+    <ul>
+    <li>IP do Servidor Primário - _________________________</li>
+    
+    <li>IP do Servidor Réplica - _________________________</li>
+    
+    <li>Nome para o Usuário de Replicação (Sugestão da autora: replicador) - _________________________</li>
+    
+    <li>Senha para o Usuário de Replicação - _________________________ (crie uma senha forte agora e anote)</li>
+    
+    <li>Senha do Superusuário postgres do Primário - _________________________ (a senha que você definiu no passo 3.1)</li>
+    </ul>
+</div>
+<div id="detalhe">
+    <h4>Como encontrar o IP de cada servidor?</h4>
+    <p>No Linux: Abra o terminal e digite "hostname -I". (Sem as aspas e o I tem que ser maiúsculo).</p>
+    <p>No Windows: Abra o Prompt de Comando (CMD) e digite "ipconfig" (Sem as aspas e procure por "Endereço IPv4").</p>
+</div>
 
-<p>Este documento fornece um guia passo a passo para configurar uma replicação streaming do PostgreSQL. O objetivo é criar um "Banco de Dados Espelho" (Servidor Réplica) que seja uma cópia em tempo real do banco de dados principal (Servidor Primário), utilizado pela plataforma ThingsBoard.</p>
-
-<h3>2. Requisitos Iniciais (Pré-requisitos)</h3>
-<p>Antes de iniciar a instalação, garanta que você atende aos seguintes requisitos:</p>
-<h4>2.1. Infraestrutura:</h4>
-<p>Dois Servidores: Duas máquinas (físicas ou virtuais) distintas.</p>
-<p>Sistemas Operacionais abordados no guia: Linux (baseado em Debian/Ubuntu) ou Windows.</p>
-<p>Acesso de Administrador: Permissão para instalar softwares e editar configurações em ambos os servidores.</p>
-<h4>2.2. Conectividade de Rede:</h4>
-<p>Os dois servidores devem estar na mesma rede e conseguir se comunicar (um consegue "pingar" o outro). A porta padrão do PostgreSQL, TCP 5432, será configurada no firewall mais adiante.</p>
-
-<h3>3. PASSO 1: Instalação dos Softwares</h3>
-<p>Nesta etapa, vamos instalar tudo que é necessário em ambos os servidores.</p>
-
-<h4>3.1. Instalação do ThingsBoard (Apenas no Servidor Primário)</h4>
-<p>Instale o ThingsBoard no servidor que você designou como Primário. Para instruções detalhadas, consulte a documentação oficial do ThingsBoard.</p>
-
-<p>Instalação via Windows - https://thingsboard.io/docs/user-guide/install/windows/</p>
-<p>Instalação via Linux - https://thingsboard.io/docs/user-guide/install/ubuntu/</p>
-
-<p id="OBS">(Seguindo a instalação LINUX, nela mesma já tem a instalação do postgresql e você pode pular para o item “3.3.” deste documento. Se optar pelo Windows, siga ao próximo passo.).</p>
-<p id="OBS">OBS: SEMPRE anote suas senhas e para onde elas servem.</p>
-<h4>3.2. Instalação do PostgreSQL</h4>
-<p>Instale o PostgreSQL em ambos os servidores (Primário e Réplica).</p>
-<p>Importante: Use a mesma versão principal do PostgreSQL em ambas as máquinas.</p>
-<h4>Instruções para Windows:</h4>
-<p>Acesse o site oficial: https://www.postgresql.org/download/windows/</p>
-<p>Baixe e execute o instalador.</p>
-<p>Durante a instalação, ele pedirá para você definir uma senha para o superusuário postgres. CRIE UMA SENHA FORTE, ANOTE-A E GUARDE-A. VOCÊ PRECISARÁ DELA.</p>
-<p>!!LEMBRE!!
-
-SEU POSTGRES DA MÁQUINA PRIMÁRIA TEM QUE ESTAR NA MESMA VERSÃO DO POSTGRES DA MÁQUINA DA RÉPLICA.</p>
-<h4>3.3. Instalação do DBeaver (Altamente Recomendado)</h4>
-<p>Instale o DBeaver em pelo menos uma das máquinas (recomendado: máquina primária) para facilitar a verificação dos dados.</p>
-<p>Download: https://dbeaver.io/download/</p>
-<h3>4. PASSO 2: Coleta de Informações e Preparação</h3>
-<p>Agora que tudo está instalado, vamos coletar e definir as informações que usaremos.</p>
-
-<h5>Sua Ficha de Informações (Preencha agora):</h5>
-<li>
-<ul>IP do Servidor Primário - _________________________</ul>
-
-<ul>IP do Servidor Réplica - _________________________</ul>
-
-<ul>Nome para o Usuário de Replicação (Sugestão da autora: replicador) - _________________________</ul>
-
-<ul>Senha para o Usuário de Replicação - _________________________ (crie uma senha forte agora e anote)</ul>
-
-<ul>Senha do Superusuário postgres do Primário - _________________________ (a senha que você definiu no passo 3.1)</ul>
-</li>
-<h4>Como encontrar o IP de cada servidor?</h4>
-<p>No Linux: Abra o terminal e digite "hostname -I". (Sem as aspas e o I tem que ser maiúsculo).</p>
-<p>No Windows: Abra o Prompt de Comando (CMD) e digite "ipconfig" (Sem as aspas e procure por "Endereço IPv4").</p>
-
-
+<div id="SO">
+    <h3>Escolha em que sistema operacional irá trabalhar:</h3>
+    <button>Linux</button>
+    <button>Windows</button>
+</div>
 </body>
 </html>
