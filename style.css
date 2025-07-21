@@ -1,0 +1,20 @@
+#titulo {
+    display: flex;
+    justify-content: center;
+}
+
+p {
+    font-size: 20px;
+}
+
+li {
+    font-size: 20px;
+}
+
+#card {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 19px;
+}
