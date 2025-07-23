@@ -1,61 +1,169 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Guia de Replicação - Linux</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streaming Replication</title>
+  <link rel="stylesheet" href="linux.css">
 </head>
 <body>
-  <h1>Guia de Replicação Streaming do PostgreSQL no Linux</h1>
-  <h2>Requisitos</h2>
-  <ul>
-    <li>PostgreSQL 15 instalado</li>
-    <li>Servidor primário (ex: 10.8.0.5)</li>
-    <li>Servidor réplica (ex: 10.8.0.7 ou 10.5.0.116)</li>
-    <li>Usuário <code>replicador</code> com permissão</li>
-  </ul>
+  <div id="titulo">
+        <h1>Guia de Replicação Streaming PostgreSQL (Linux)</h1>
+      </div>
+<h3>PASSO 1: Configuração da Replicação (Linux)</h3>
+  <p>Com sua Ficha de Informações preenchida, podemos começar a configuração.</p>
 
-  <h2>Passo 1: Configurar a primária</h2>
-  <ol>
-    <li>Ative o modo de arquivamento:
-      <pre><code>
-archive_mode = on  
-archive_command = 'cp %p /var/lib/postgresql/15/main/pg_wal_archive/%f'
-      </code></pre>
-    </li>
-    <li>Ative a escuta e a conexão:
-      <pre><code>
-listen_addresses = '*'
-wal_level = replica
-max_wal_senders = 10
-      </code></pre>
-    </li>
-    <li>No <code>pg_hba.conf</code> da primária:
-      <pre><code>
-host replication replicador 10.8.0.0/16 md5
-      </code></pre>
-    </li>
-  </ol>
+<h4>Etapa 1: Configuração do Servidor PRIMÁRIO</h4>
+  <p>Criar Usuário de Replicação No servidor Primário, <strong>acesse o psql como superusuário</strong> execute, usando a senha da sua Ficha:</p>
+<p>OBS: <strong>Como Acessar o psql como Superusuário? Digite "sudo" na frente de cada comando (Tenha em mente que precisa da senha de super usuário no início da replicação).</strong></p>
+<h4>No Servidor Linux (via Terminal)</h4>
+<p>No Linux, o PostgreSQL geralmente cria um usuário no próprio sistema operacional chamado postgres. A forma mais fácil e segura de acessar o psql é "personificar" esse usuário por um momento.</p>
+<ol>
+  <li>Abra o terminal no seu servidor Linux Primário.</li>
+  <br>
+  <li>Digite o seguinte comando e pressione Enter:</li>
+</ol>
 
-  <h2>Passo 2: Preparar a réplica</h2>
-  <ol>
-    <li>Pare o serviço do PostgreSQL na réplica:
-      <pre><code>sudo systemctl stop postgresql</code></pre>
-    </li>
-    <li>Faça o backup com <code>pg_basebackup</code>:
-      <pre><code>
-pg_basebackup -h 10.8.0.5 -U replicador -D /var/lib/postgresql/15/main -Fp -Xs -P
-      </code></pre>
-    </li>
-    <li>Crie o arquivo <code>standby.signal</code> e configure o <code>postgresql.auto.conf</code>:
-      <pre><code>
-primary_conninfo = 'host=10.8.0.5 user=replicador password=SUASENHA'
-      </code></pre>
-    </li>
-    <li>Inicie o PostgreSQL:
-      <pre><code>sudo systemctl start postgresql</code></pre>
-    </li>
-  </ol>
+<strong>
+  <p>sudo -u postgres psql</p>
+</strong>
 
-  <p><a href="replicacao-windows.html">Ir para o guia do Windows</a></p>
+<p><strong>sudo</strong>: Executa o comando com privilégios de administrador do sistema.</p>
+
+<strong>-u postgres</strong>: Especifica que o comando deve ser rodado como se você fosse o usuário do sistema postgres.
+
+<p><strong>psql</strong>: É o programa que você quer rodar.</p>
+
+<h3>O que você deve ver:</h3>
+
+<strong>
+  <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
+  <p>Digite "help" para ajuda. </p>
+  
+  <p>postgres=#</p>
+</strong>
+
+<p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+<img src="loginPostgres.png" alt="LoginPostgres" class="login">
+<strong>
+  <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
+</strong>
+<p>O prompt postgres=# é a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
+
+<p>**Para sair do psql e voltar ao terminal normal, digite \q e pressione Enter.**</p>
+
+
+<p>SQL (No terminal postgres=# mostrado na imagem)</p>
+<p>
+  
+  CREATE ROLE replicador WITH REPLICATION LOGIN PASSWORD 'SENHA_DO_USUARIO_DE_REPLICACAO';
+   Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)
+</p>
+<p>Comando para abrir:</p> 
+
+<p>sudo nano /etc/postgresql/15/main/postgresql.conf </p>
+<p>Encontre (Linux = ctrl + w), descomente (remova o #) e edpite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
+
+<ul>
+    <li>listen_addresses = '*'</li>
+    <li>wal_level = replica</li>
+    <li>max_wal_senders = 10</li>
+    <li>wal_keep_size = 256</li>
+</ul>
+
+
+<p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
+<p>Comando para abrir (Linux): </p>
+
+<p>sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
+
+<p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+<p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
+
+<p>host    replication     replicador    IP_DO_SERVIDOR_REPLICA/32   scram-sha-256</p>
+<p>Reiniciar Serviço do Primário</p>
+<p>Terminal normal (após salvar e sair do arquivo hba): </p>
+
+<p>sudo systemctl restart postgresql</p>
+
+<h3>Etapa 2: Preparação do Servidor RÉPLICA</h3>
+<p>Parar e Limpar o Serviço na Réplica (CUIDADO! Recomendação: Usar um servidor réplica VAZIO, pois uma das ações será limpar todos os dados do banco de dados presentes nele!)</p>
+<p>Linux (Terminal):</p>
+
+<p>sudo systemctl stop postgresql</p>
+
+<p>sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
+
+<strong>
+  <p>*Substitua o número pelo número da versão do seu postgres*</p>
+</strong>
+
+<p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
+<p>Linux:</p>
+
+<p>sudo -u postgres pg_basebackup -h IP_DA_PRIMARIA -U NOME_DE_USUARIO -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p>
+<p>(As letras em maiúsculo e minúsculo devem ficar exatamente assim)</p>
+<strong>
+  <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+</strong>
+<p>O comando pedirá a senha do usuário replicador que você anotou.</p>
+<p>Finalização e Verificação</p>
+<p>Iniciar Serviço na Réplica</p>
+<p>Linux: </p>
+
+<p>sudo systemctl start postgresql</p>
+<p>Verificar Status no Primário No Primário, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
+<p>SQL (postgres=#)</p>
+
+<p>SELECT * FROM pg_stat_replication;</p>
+
+<p>Resultado esperado: Uma linha com o IP da Réplica e state como streaming.</p>
+<p>Verificar Status na Réplica, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
+<p>SQL  (postgres=#)</p>
+
+<p>SELECT pg_is_in_recovery();</p>
+
+<p>Resultado esperado: A consulta deve retornar t (true).</p>
+<h3>Teste Funcional</h3>
+<p>No Primário, crie uma tabela:<strong> CREATE TABLE teste_final (id INT);</strong></p>
+<p>Insira um dado: <strong>INSERT INTO teste_final VALUES (100);</strong></p>
+<p>Na Réplica, verifique se o dado apareceu: <strong>SELECT * FROM teste_final;</strong></p>
+
+<p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
+
+<h3>Fazendo a Conexão no DBeaver (Visualização Recomendada)</h3>
+<p>Para verificar se a replicação está funcionando, o ideal é ter tanto o banco de dados original (Primário) quanto o espelho (Réplica) visíveis no DBeaver. Siga os passos abaixo.</p>
+<p>Parte 1: Conectando ao Banco de Dados PRIMÁRIO (ThingsBoard)</p>
+<p>Abra o DBeaver. A tela principal será parecida com as imagens que você me enviou, com o menu "Arquivo", "Editar", etc., na parte de cima e o painel "Navegador de banco de dados" à esquerda.</p>
+
+<p>No canto superior esquerdo da janela, procure por um ícone que parece uma tomada de energia com um sinal de '+' sobre ele. Este é o botão de "Nova Conexão". Clique nele.</p>
+
+<p>Alternativa: Se não encontrar o ícone, clique em "Banco de dados" no menu superior e depois em "Nova Conexão".</p>
+
+<p>Uma nova janela "Conectar a um banco de dados" vai aparecer. Na lista, selecione PostgreSQL e clique no botão "Avançar" no final da janela.</p>
+
+<p>Você estará na aba "Principal" das "Configurações de Conexão". Preencha os campos da seguinte forma:</p>
+<p>Host: Coloque o IP do Servidor Primário que você anotou na sua Ficha de Informações.</p>
+<p>Porta: Mantenha o valor padrão, que é 5432.</p>
+<p>Base de Dados: Digite thingsboard. Este é o nome padrão do banco de dados que o ThingsBoard usa.</p>
+<p>Autenticação: Mantenha "Nativa do Banco de Dados".</p>
+<p>Nome de usuário: Digite postgres (ou o superusuário que você está usando).</p>
+<p>Senha: Digite a senha deste usuário.</p>
+
+<p>No canto inferior esquerdo da mesma janela, clique no botão "Testar conexão...". Uma janela de confirmação deve aparecer, mostrando os detalhes do driver e a versão do PostgreSQL. Se tudo estiver correto, clique em "OK".</p>
+
+
+<p>Clique em "Concluir".</p>
+
+
+<p>Resultado: Você verá sua nova conexão aparecer no painel "Navegador de banco de dados" à esquerda. Ela terá um nome como thingsboard. Você pode clicar com o botão direito sobre ela e escolher "Renomear" para algo mais descritivo, como [PRIMÁRIO] ThingsBoard DB.</p>
+<p>Parte 2: Conectando ao Banco de Dados RÉPLICA (Banco Espelho)</p>
+<p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
+<p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
+<p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
+<p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+
+
+
 </body>
 </html>

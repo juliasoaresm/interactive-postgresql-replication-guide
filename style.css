@@ -78,17 +78,3 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
-
-@media screen and (max-width: 900px) {
-    #container {
-        grid-template-columns: 1fr;
-    }
-
-    nav#sidebar-esquerda, #sidebar-direita {
-        display: none;
-    }
-
-    #conteudo {
-        padding: 10px;
-    }
-}
