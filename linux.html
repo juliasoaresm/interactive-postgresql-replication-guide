@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Guia de Replicação - Linux</title>
+</head>
+<body>
+  <h1>Guia de Replicação Streaming do PostgreSQL no Linux</h1>
+  <h2>Requisitos</h2>
+  <ul>
+    <li>PostgreSQL 15 instalado</li>
+    <li>Servidor primário (ex: 10.8.0.5)</li>
+    <li>Servidor réplica (ex: 10.8.0.7 ou 10.5.0.116)</li>
+    <li>Usuário <code>replicador</code> com permissão</li>
+  </ul>
+
+  <h2>Passo 1: Configurar a primária</h2>
+  <ol>
+    <li>Ative o modo de arquivamento:
+      <pre><code>
+archive_mode = on  
+archive_command = 'cp %p /var/lib/postgresql/15/main/pg_wal_archive/%f'
+      </code></pre>
+    </li>
+    <li>Ative a escuta e a conexão:
+      <pre><code>
+listen_addresses = '*'
+wal_level = replica
+max_wal_senders = 10
+      </code></pre>
+    </li>
+    <li>No <code>pg_hba.conf</code> da primária:
+      <pre><code>
+host replication replicador 10.8.0.0/16 md5
+      </code></pre>
+    </li>
+  </ol>
+
+  <h2>Passo 2: Preparar a réplica</h2>
+  <ol>
+    <li>Pare o serviço do PostgreSQL na réplica:
+      <pre><code>sudo systemctl stop postgresql</code></pre>
+    </li>
+    <li>Faça o backup com <code>pg_basebackup</code>:
+      <pre><code>
+pg_basebackup -h 10.8.0.5 -U replicador -D /var/lib/postgresql/15/main -Fp -Xs -P
+      </code></pre>
+    </li>
+    <li>Crie o arquivo <code>standby.signal</code> e configure o <code>postgresql.auto.conf</code>:
+      <pre><code>
+primary_conninfo = 'host=10.8.0.5 user=replicador password=SUASENHA'
+      </code></pre>
+    </li>
+    <li>Inicie o PostgreSQL:
+      <pre><code>sudo systemctl start postgresql</code></pre>
+    </li>
+  </ol>
+
+  <p><a href="replicacao-windows.html">Ir para o guia do Windows</a></p>
+</body>
+</html>

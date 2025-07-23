@@ -1,20 +1,94 @@
-#titulo {
-    display: flex;
-    justify-content: center;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
 }
 
-p {
-    font-size: 20px;
+#container {
+    display: grid;
+    grid-template-columns: 23% 50% 27%;
+    min-height: 100vh;
 }
 
-li {
-    font-size: 20px;
+nav#sidebar-esquerda img {
+    max-width: 90px;
+    max-height: 90px;
+    margin-top: 10px;
 }
 
-#card {
-    font-size: 20px;
+#GPSERS {
+    max-width: 70px;
+    max-height: 70px;
+    border-radius: 20%;
+    margin-top: 10px;
 }
 
-h4 {
-    font-size: 19px;
+nav#sidebar-esquerda {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+nav#sidebar-esquerda ol {
+    margin-top: 20px;
+    padding: 15px;
+}
+
+nav#sidebar-esquerda li {
+    margin-bottom: 20px;
+}
+
+nav#sidebar-esquerda li:hover {
+    color: rgb(87, 87, 87);
+}
+
+nav#sidebar-esquerda a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav#sidebar-esquerda a:hover {
+    color: rgb(87, 87, 87);
+}
+
+#conteudo {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#sidebar-direita {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-left: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+h1, h3, h4 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 900px) {
+    #container {
+        grid-template-columns: 1fr;
+    }
+
+    nav#sidebar-esquerda, #sidebar-direita {
+        display: none;
+    }
+
+    #conteudo {
+        padding: 10px;
+    }
 }
