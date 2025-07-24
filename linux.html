@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Streaming Replication</title>
+  <link rel="icon" type="image/x-icon" href="capriccheIcon.png" />
   <link rel="stylesheet" href="linux.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div id="titulo">
@@ -23,10 +25,12 @@
   <br>
   <li>Digite o seguinte comando e pressione Enter:</li>
 </ol>
-
-<strong>
-  <p>sudo -u postgres psql</p>
-</strong>
+<div id="comando-container">
+  <p class="comando">sudo -u postgres psql</p>
+  <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 
 <p><strong>sudo</strong>: Executa o comando com privilégios de administrador do sistema.</p>
 
@@ -54,15 +58,22 @@
 
 
 <p>SQL (No terminal postgres=# mostrado na imagem)</p>
-<p>
-  
-  CREATE ROLE replicador WITH REPLICATION LOGIN PASSWORD 'SENHA_DO_USUARIO_DE_REPLICACAO';
-   Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)
-</p>
-<p>Comando para abrir:</p> 
+<div id="comando-container">
+<p class="comandoG">CREATE ROLE replicador WITH REPLICATION LOGIN PASSWORD 'SENHA_DO_USUARIO_DE_REPLICACAO';</p>  
+ <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+ </div>
+ <p>Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)</p>
 
-<p>sudo nano /etc/postgresql/15/main/postgresql.conf </p>
-<p>Encontre (Linux = ctrl + w), descomente (remova o #) e edpite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
+<p>Comando para abrir:</p> 
+<div id="comando-container">
+<p class="comando">sudo nano /etc/postgresql/15/main/postgresql.conf </p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
+<p>Encontre (Linux = ctrl + w), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
 
 <ul>
     <li>listen_addresses = '*'</li>
@@ -74,34 +85,55 @@
 
 <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
 <p>Comando para abrir (Linux): </p>
-
-<p>sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
-
+<div id="comando-container">
+<p class="comando">sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
 <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
-
-<p>host    replication     replicador    IP_DO_SERVIDOR_REPLICA/32   scram-sha-256</p>
-<p>Reiniciar Serviço do Primário</p>
-<p>Terminal normal (após salvar e sair do arquivo hba): </p>
-
-<p>sudo systemctl restart postgresql</p>
+<div id="comando-container">
+<p class="comando">host    replication     replicador    IP_DO_SERVIDOR_REPLICA/32   scram-sha-256</p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
+<p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
+<div id="comando-container">
+<p class="comando">sudo systemctl restart postgresql</p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 
 <h3>Etapa 2: Preparação do Servidor RÉPLICA</h3>
 <p>Parar e Limpar o Serviço na Réplica (CUIDADO! Recomendação: Usar um servidor réplica VAZIO, pois uma das ações será limpar todos os dados do banco de dados presentes nele!)</p>
 <p>Linux (Terminal):</p>
-
-<p>sudo systemctl stop postgresql</p>
-
-<p>sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
-
+<div id="comando-container">
+<p class="comando">sudo systemctl stop postgresql</p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
+<div id="comando-container">
+<p class="comandoG">sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
+<button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 <strong>
   <p>*Substitua o número pelo número da versão do seu postgres*</p>
 </strong>
 
 <p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
 <p>Linux:</p>
-
-<p>sudo -u postgres pg_basebackup -h IP_DA_PRIMARIA -U NOME_DE_USUARIO -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p>
+<div id="comando-container">
+<p class="comandoG">sudo -u postgres pg_basebackup -h IP_DA_PRIMARIA -U NOME_DE_USUARIO -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p>
+ <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 <p>(As letras em maiúsculo e minúsculo devem ficar exatamente assim)</p>
 <strong>
   <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
@@ -111,23 +143,39 @@
 <p>Iniciar Serviço na Réplica</p>
 <p>Linux: </p>
 
-<p>sudo systemctl start postgresql</p>
+<div id="comando-container">
+<p class="comando">sudo systemctl start postgresql</p>
+ <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 <p>Verificar Status no Primário No Primário, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
 <p>SQL (postgres=#)</p>
 
-<p>SELECT * FROM pg_stat_replication;</p>
+<div id="comando-container">
+<p class="comando">SELECT * FROM pg_stat_replication;</p>
+ <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 
 <p>Resultado esperado: Uma linha com o IP da Réplica e state como streaming.</p>
 <p>Verificar Status na Réplica, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
 <p>SQL  (postgres=#)</p>
 
-<p>SELECT pg_is_in_recovery();</p>
+<div id="comando-container">
+  <p class="comando">SELECT pg_is_in_recovery();</p>
+  <button class="copiar" onclick="copiarComando()">
+  <i class="fa-solid fa-copy"></i>
+</button>
+</div>
 
 <p>Resultado esperado: A consulta deve retornar t (true).</p>
 <h3>Teste Funcional</h3>
-<p>No Primário, crie uma tabela:<strong> CREATE TABLE teste_final (id INT);</strong></p>
-<p>Insira um dado: <strong>INSERT INTO teste_final VALUES (100);</strong></p>
-<p>Na Réplica, verifique se o dado apareceu: <strong>SELECT * FROM teste_final;</strong></p>
+<p>No Primário, crie uma tabela:<strong class="comando"> CREATE TABLE teste_final (id INT);</strong></p>
+<p>Insira um dado: <strong class="comando">INSERT INTO teste_final VALUES (100);</strong></p>
+<p>Na Réplica, verifique se o dado apareceu:</p>
+<p><strong class="comando">SELECT * FROM teste_final;</strong></p>
 
 <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
 
