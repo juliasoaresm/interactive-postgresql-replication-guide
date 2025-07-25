@@ -40,15 +40,29 @@ button:hover {
     cursor: pointer;
 }
 
-
 #comando-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #eee;
     background-color: #eee;
-    padding: 5px 10px;
+    padding: 1px 20px;
     min-width: 30%;
     max-width: 65vw;
     box-sizing: border-box;
+}
+
+#card {
+    border: 1px solid #d8d8d8;
+    background-color: #eee;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    max-width: 25%;
+    padding: 10px;
+}
+
+#card2 {
+    border: 1px solid #d8d8d8;
+    background-color: #eee;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    max-width: 15%;
 }

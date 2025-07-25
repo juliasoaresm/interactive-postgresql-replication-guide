@@ -7,6 +7,7 @@
   <link rel="icon" type="image/x-icon" href="capriccheIcon.png" />
   <link rel="stylesheet" href="linux.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="script.js"></script>
 </head>
 <body>
   <div id="titulo">
@@ -38,21 +39,23 @@
 
 <p><strong>psql</strong>: É o programa que você quer rodar.</p>
 
-<h3>O que você deve ver:</h3>
 
-<strong>
-  <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
-  <p>Digite "help" para ajuda. </p>
+  <h3>O que você deve ver:</h3>
+  <div id="card">
+  <strong>
+    <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
+    <p>Digite "help" para ajuda. </p>
   
-  <p>postgres=#</p>
-</strong>
+    <p>postgres=#</p>
+  </strong>
+</div>
 
 <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
 <img src="loginPostgres.png" alt="LoginPostgres" class="login">
 <strong>
   <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
 </strong>
-<p>O prompt postgres=# é a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
+<p>O prompt <strong>postgres=#</strong> a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
 
 <p>**Para sair do psql e voltar ao terminal normal, digite \q e pressione Enter.**</p>
 
@@ -75,12 +78,14 @@
 </div>
 <p>Encontre (Linux = ctrl + w), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
 
-<ul>
-    <li>listen_addresses = '*'</li>
-    <li>wal_level = replica</li>
-    <li>max_wal_senders = 10</li>
-    <li>wal_keep_size = 256</li>
-</ul>
+<div id="card2">
+  <ul>
+      <li>listen_addresses = '*'</li>
+      <li>wal_level = replica</li>
+      <li>max_wal_senders = 10</li>
+      <li>wal_keep_size = 256</li>
+  </ul>
+</div>
 
 
 <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>

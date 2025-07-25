@@ -9,6 +9,12 @@ body {
     min-height: 100vh;
 }
 
+#card {
+    border: 1px solid #d8d8d8;
+    background-color: #eee;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+}
+
 nav#sidebar-esquerda img {
     max-width: 90px;
     max-height: 90px;
