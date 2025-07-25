@@ -129,7 +129,7 @@
 <p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
 <p>Linux:</p>
 <div id="comando-container">
-<p class="comandoG">sudo -u postgres pg_basebackup -h IP_DA_PRIMARIA -U NOME_DE_USUARIO -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p>
+<p class="comandoG">sudo -u postgres pg_basebackup -h IP_DA_PRIMARIA -U NOME_DE_USUARIO -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
  <button class="copiar" onclick="copiarComando()">
   <i class="fa-solid fa-copy"></i>
 </button>

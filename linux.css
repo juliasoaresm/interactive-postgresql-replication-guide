@@ -29,14 +29,26 @@ body {
   margin-left: 10px;
 }
 
+button {
+    border: none;
+}
+
+button:hover {
+    background-color: rgb(214, 214, 214);
+    border-radius: 30%;
+    padding: 12px;
+    cursor: pointer;
+}
+
+
 #comando-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid #eee;
     background-color: #eee;
     padding: 5px 10px;
-    width: 30%;
-    max-width: 100%;
+    min-width: 30%;
+    max-width: 65vw;
     box-sizing: border-box;
 }
