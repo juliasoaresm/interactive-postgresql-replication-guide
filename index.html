@@ -6,7 +6,7 @@
   <title>Streaming Replication</title>
   <link rel="icon" type="image/x-icon" href="capriccheIcon.png" />
   <script src="script.js"></script>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
   <div id="container">
@@ -74,14 +74,29 @@
         <h4>Sua Ficha de Informações (Preencha agora):</h4>
         <div id="card">
           <ul>
-            <li>IP do Servidor Primário - _________________________</li>
-            <li>IP do Servidor Réplica - _________________________</li>
-            <li>Nome para o Usuário de Replicação - _________________________</li>
-            <li>Senha para o Usuário de Replicação - _________________________</li>
-            <li>Senha do Superusuário postgres - _________________________</li>
+            <li>
+              IP do Servidor Primário
+              <input type="text" id="ipPrimario" placeholder="ex: 192.168.0.10">
+            </li>
+            <li>
+              IP do Servidor réplica
+              <input type="text" id="ipReplica" placeholder="ex: 192.168.0.11">
+            </li>
+            <li>
+              Nome para o Usuário de Replicação
+              <input type="text" id="usuarioReplicacao" placeholder="ex: replicador">
+            </li>
+            <li>
+              Senha para o Usuário de Replicação
+              <input type="password" id="senhaReplicacao" placeholder="ex: 1234567">
+            </li>
+            <li>
+              Senha do Superusuário postgres
+              <input type="password" id="SenhaSuperUsuario" placeholder="ex: 1234567">
+            </li>
           </ul>
         </div>
-
+        <button id="submit">Atualizar</button>
         <div id="detalhe">
           <h4>Como encontrar o IP de cada servidor?</h4>
           <p><strong>No Linux:</strong> terminal → `hostname -I`</p>
