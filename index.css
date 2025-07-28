@@ -5,8 +5,12 @@ body {
 
 #container {
     display: grid;
-    grid-template-columns: 23% 50% 27%;
+    grid-template-columns: 17% 66% 17%;
     min-height: 100vh;
+}
+
+main {
+    background-color: rgb(230, 230, 230);
 }
 
 #card {
@@ -29,9 +33,9 @@ nav#sidebar-esquerda img {
 }
 
 nav#sidebar-esquerda {
-    background-color: #f4f4f4;
+    background-color: #fab9b9;
     padding: 20px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid #fab9b9;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -47,7 +51,7 @@ nav#sidebar-esquerda li {
 }
 
 nav#sidebar-esquerda li:hover {
-    color: rgb(87, 87, 87);
+    color: rgb(255, 0, 0);
 }
 
 nav#sidebar-esquerda a {
@@ -57,7 +61,7 @@ nav#sidebar-esquerda a {
 }
 
 nav#sidebar-esquerda a:hover {
-    color: rgb(87, 87, 87);
+    color: rgb(255, 0, 0);
 }
 
 #conteudo {
