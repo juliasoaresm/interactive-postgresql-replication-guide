@@ -44,7 +44,7 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #eee;
+    border: 1px solid #000000;
     background-color: #eee;
     padding: 1px 20px;
     min-width: 30%;
