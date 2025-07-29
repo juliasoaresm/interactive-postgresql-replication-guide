@@ -23,3 +23,20 @@ function copiarComando() {
     botao.innerHTML = '<i class="fa-solid fa-copy"></i>';
   }, 600);
 }
+document.getElementById('submit').addEventListener('click', function () {
+    // Coleta os dados dos campos
+    const dados = {
+      ipPrimario: document.getElementById('ipPrimario').value,
+      ipReplica: document.getElementById('ipReplica').value,
+      usuarioReplicacao: document.getElementById('usuarioReplicacao').value,
+      senhaReplicacao: document.getElementById('senhaReplicacao').value,
+      SenhaSuperUsuario: document.getElementById('SenhaSuperUsuario').value
+    };
+
+    // Atualiza os textos que possuem os placeholders
+    Object.keys(dados).forEach(key => {
+      document.querySelectorAll(`[data-placeholder="${key}"]`).forEach(span => {
+        span.textContent = dados[key] || span.dataset.placeholder;
+      });
+    });
+  });

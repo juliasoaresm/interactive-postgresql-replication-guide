@@ -5,12 +5,12 @@ body {
 
 #container {
     display: grid;
-    grid-template-columns: 17% 66% 17%;
+    grid-template-columns: 15% 75% 10%;
     min-height: 100vh;
 }
 
 main {
-    background-color: rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
 }
 
 #card {
@@ -33,9 +33,9 @@ nav#sidebar-esquerda img {
 }
 
 nav#sidebar-esquerda {
-    background-color: #fab9b9;
+    background-color: #ebebeb;
     padding: 20px;
-    border-right: 1px solid #fab9b9;
+    border-right: 1px solid #ebebeb;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -51,7 +51,7 @@ nav#sidebar-esquerda li {
 }
 
 nav#sidebar-esquerda li:hover {
-    color: rgb(255, 0, 0);
+    color: rgb(0, 81, 255);
 }
 
 nav#sidebar-esquerda a {
@@ -61,7 +61,7 @@ nav#sidebar-esquerda a {
 }
 
 nav#sidebar-esquerda a:hover {
-    color: rgb(255, 0, 0);
+    color: rgb(0, 38, 255);
 }
 
 #conteudo {
@@ -87,4 +87,34 @@ button {
     margin: 10px;
     font-size: 16px;
     cursor: pointer;
+}
+
+img {
+    cursor: pointer;
+}
+
+.nome {
+    text-align: center;
+}
+
+#img {
+    margin-top: 20px;
+}
+
+#Facepe {
+    width: 100px;
+    height: 40px;
+}
+#IFPE {
+     width: 100px;
+    height: 72px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #f8f8f8;
 }
