@@ -3,9 +3,19 @@ body {
     font-family: Arial, sans-serif;
 }
 
+@keyframes destaqueBrilho {
+  0%   { background-color: yellow; }
+  100% { background-color: transparent; }
+}
+
+.destacado {
+  animation: destaqueBrilho 1s ease-in-out;
+}
+
+
 #container {
     display: grid;
-    grid-template-columns: 15% 75% 10%;
+    grid-template-columns: 15% 73% 12%;
     min-height: 100vh;
 }
 
@@ -19,15 +29,33 @@ main {
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-nav#sidebar-esquerda img {
-    max-width: 90px;
-    max-height: 90px;
-    margin-top: 10px;
+.card2 {
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    width: 145px;
+    text-align: center;
+    background-color: #eee;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
+
+#cardLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card2:hover {
+    cursor: pointer;
+}
+
+/*nav#sidebar-esquerda img {
+    width: 120px;
+    height: 127px;
+}*/
 
 #GPSERS {
     max-width: 70px;
-    max-height: 70px;
+    max-height: 90px;
     border-radius: 20%;
     margin-top: 10px;
 }
@@ -41,13 +69,19 @@ nav#sidebar-esquerda {
     height: 100vh;
 }
 
-nav#sidebar-esquerda ol {
+nav#sidebar-esquerda ul {
     margin-top: 20px;
-    padding: 15px;
+    padding: 5px;
 }
 
 nav#sidebar-esquerda li {
     margin-bottom: 20px;
+    list-style-type: none;
+}
+
+.logo {
+    width: 110px;
+    height: 120px;
 }
 
 nav#sidebar-esquerda li:hover {
@@ -70,9 +104,9 @@ nav#sidebar-esquerda a:hover {
 }
 
 #sidebar-direita {
-    background-color: #f9f9f9;
+    background-color: #ffffff;
     padding: 20px;
-    border-left: 1px solid #ccc;
+    border: none;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -97,17 +131,17 @@ img {
     text-align: center;
 }
 
-#img {
-    margin-top: 20px;
-}
-
-#Facepe {
-    width: 100px;
-    height: 40px;
+#FACEPE {
+    width: 90px;
+    height: 70px;
+    border-radius: 20%;
+    margin-top: 10px;
 }
 #IFPE {
-     width: 100px;
-    height: 72px;
+    max-width: 70px;
+    max-height: 90px;
+    border-radius: 20%;
+    margin-top: 10px;
 }
 
 footer {
@@ -116,5 +150,6 @@ footer {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    height: 167px;
     background-color: #f8f8f8;
 }

@@ -11,214 +11,244 @@
 </head>
 <body>
   <div id="container">
-    <div id="sidebar-esquerda"><button onclick="location.href='index.html'">Voltar</button></div>
-    <div id="titulo">
-          <h1>Guia de Replicação Streaming PostgreSQL (Linux)</h1>
+    <nav id="sidebar-esquerda">
+      <button onclick="location.href='index.html'">Voltar</button>
+    </nav>
+    <main id="conteudo">
+      <div id="titulo">
+            <h1>Guia de Replicação Streaming PostgreSQL (Linux)</h1>
+          </div>
+      <h3>PASSO 1: Configuração da Replicação (Linux)</h3>
+      <p>Com sua Ficha de Informações preenchida, podemos começar a configuração.</p>
+      
+      <section>
+        <h4>Etapa 1: Configuração do Servidor PRIMÁRIO</h4>
+        <p>Criar Usuário de Replicação No servidor Primário, <strong>acesse o psql como superusuário</strong> execute, usando a senha da sua Ficha:</p>
+        <p>OBS: <strong>Como Acessar o psql como Superusuário? Digite "sudo" na frente de cada comando (Tenha em mente que precisa da senha de super usuário no início da replicação).</strong></p>
+        <h4>No Servidor Linux (via Terminal)</h4>
+        <p>No Linux, o PostgreSQL geralmente cria um usuário no próprio sistema operacional chamado postgres. A forma mais fácil e segura de acessar o psql é "personificar" esse usuário por um momento.</p>
+        <ol>
+        <li>Abra o terminal no seu servidor Linux Primário.</li>
+        <br>
+        <li>Digite o seguinte comando e pressione Enter:</li>
+        </ol>
+        <div id="comando-container">
+        <p class="comando">sudo -u postgres psql</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
         </div>
-    <h3>PASSO 1: Configuração da Replicação (Linux)</h3>
-    <p>Com sua Ficha de Informações preenchida, podemos começar a configuração.</p>
-    
-    <h4>Etapa 1: Configuração do Servidor PRIMÁRIO</h4>
-    <p>Criar Usuário de Replicação No servidor Primário, <strong>acesse o psql como superusuário</strong> execute, usando a senha da sua Ficha:</p>
-    <p>OBS: <strong>Como Acessar o psql como Superusuário? Digite "sudo" na frente de cada comando (Tenha em mente que precisa da senha de super usuário no início da replicação).</strong></p>
-    <h4>No Servidor Linux (via Terminal)</h4>
-    <p>No Linux, o PostgreSQL geralmente cria um usuário no próprio sistema operacional chamado postgres. A forma mais fácil e segura de acessar o psql é "personificar" esse usuário por um momento.</p>
-    <ol>
-    <li>Abra o terminal no seu servidor Linux Primário.</li>
-    <br>
-    <li>Digite o seguinte comando e pressione Enter:</li>
-    </ol>
-    <div id="comando-container">
-    <p class="comando">sudo -u postgres psql</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    
-    <p><strong>sudo</strong>: Executa o comando com privilégios de administrador do sistema.</p>
-    
-    <strong>-u postgres</strong>: Especifica que o comando deve ser rodado como se você fosse o usuário do sistema postgres.
-    
-    <p><strong>psql</strong>: É o programa que você quer rodar.</p>
-    <h3>O que você deve ver:</h3>
-    <div id="card">
-    <strong>
-      <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
-      <p>Digite "help" para ajuda. </p>
-    
-      <p>postgres=#</p>
-    </strong>
-    </div>
-    
-    <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
-    <img src="loginPostgres.png" alt="LoginPostgres" class="login">
-    <strong>
-    <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
-    </strong>
-    <p>O prompt <strong>postgres=#</strong> a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
-    
-    <p>**Para sair do psql e voltar ao terminal normal, digite \q e pressione Enter.**</p>
-    
-    
-    <p>SQL (No terminal postgres=# mostrado na imagem)</p>
-    <div id="comando-container">
-    <p class="comandoG">CREATE ROLE <span id="nomeUsuario"></span> WITH REPLICATION LOGIN PASSWORD '<span id="SenhaReplicacao"></span>';</p>  
-     <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-     </div>
-     <p>Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)</p>
-    
-    <p>Comando para abrir:</p> 
-    <div id="comando-container">
-    <p class="comando">sudo nano /etc/postgresql/15/main/postgresql.conf </p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <p>Encontre (Linux = ctrl + w), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
-    
-    <div id="card2">
-    <ul>
-        <li>listen_addresses = '*'</li>
-        <li>wal_level = replica</li>
-        <li>max_wal_senders = 10</li>
-        <li>wal_keep_size = 256</li>
-    </ul>
-    </div>
-    
-    
-    <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
-    <p>Comando para abrir (Linux): </p>
-    <div id="comando-container">
-    <p class="comando">sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
-    <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
-    <div id="comando-container">
-    <p class="comando">host    replication    <span id="nomeUsuario"></span>    <span id="ipReplica"></span>   scram-sha-256</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
-    <div id="comando-container">
-    <p class="comando">sudo systemctl restart postgresql</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    
-    <h3>Etapa 2: Preparação do Servidor RÉPLICA</h3>
-    <p>Parar e Limpar o Serviço na Réplica (CUIDADO! Recomendação: Usar um servidor réplica VAZIO, pois uma das ações será limpar todos os dados do banco de dados presentes nele!)</p>
-    <p>Linux (Terminal):</p>
-    <div id="comando-container">
-    <p class="comando">sudo systemctl stop postgresql</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <br>
-    <div id="comando-container">
-    <p class="comandoG">sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <strong>
-    <p>*Substitua o número pelo número da versão do seu postgres*</p>
-    </strong>
-    
-    <p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
-    <p>Linux:</p>
-    <div id="comando-container">
-    <p class="comandoG">sudo -u postgres pg_basebackup -h <span id="ipPrimario"></span> -U <span id="nomeUsuario"></span> -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
-     <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <p>(As letras em maiúsculo e minúsculo devem ficar exatamente assim)</p>
-    <strong>
-    <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
-    </strong>
-    <p>O comando pedirá a senha do usuário replicador que você anotou.</p>
-    <p>Finalização e Verificação</p>
-    <p>Iniciar Serviço na Réplica</p>
-    <p>Linux: </p>
-    
-    <div id="comando-container">
-    <p class="comando">sudo systemctl start postgresql</p>
-     <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    <p>Verificar Status no Primário No Primário, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
-    <p>SQL (postgres=#)</p>
-    
-    <div id="comando-container">
-    <p class="comando">SELECT * FROM pg_stat_replication;</p>
-     <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    
-    <p>Resultado esperado: Uma linha com o IP da Réplica e state como streaming.</p>
-    <p>Verificar Status na Réplica, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
-    <p>SQL  (postgres=#)</p>
-    
-    <div id="comando-container">
-    <p class="comando">SELECT pg_is_in_recovery();</p>
-    <button class="copiar" onclick="copiarComando()">
-    <i class="fa-solid fa-copy"></i>
-    </button>
-    </div>
-    
-    <p>Resultado esperado: A consulta deve retornar t (true).</p>
-    <h3>Teste Funcional</h3>
-    <p>No Primário, crie uma tabela:<strong class="comando"> CREATE TABLE teste_final (id INT);</strong></p>
-    <p>Insira um dado: <strong class="comando">INSERT INTO teste_final VALUES (100);</strong></p>
-    <p>Na Réplica, verifique se o dado apareceu:</p>
-    <p><strong class="comando">SELECT * FROM teste_final;</strong></p>
-    
-    <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
-    
-    <h3>Fazendo a Conexão no DBeaver (Visualização Recomendada)</h3>
-    <p>Para verificar se a replicação está funcionando, o ideal é ter tanto o banco de dados original (Primário) quanto o espelho (Réplica) visíveis no DBeaver. Siga os passos abaixo.</p>
-    <h4>Parte 1: Conectando ao Banco de Dados PRIMÁRIO (ThingsBoard)</h4>
-    <p>Abra o DBeaver. A tela principal será parecida com as imagens que você me enviou, com o menu "Arquivo", "Editar", etc., na parte de cima e o painel "Navegador de banco de dados" à esquerda.</p>
-    
-    <p>No canto superior esquerdo da janela, procure por um ícone que parece uma tomada de energia com um sinal de '+' sobre ele. Este é o botão de "Nova Conexão". Clique nele.</p>
-    
-    <h4>Alternativa: Se não encontrar o ícone, clique em "Banco de dados" no menu superior e depois em "Nova Conexão".</h4>
-    
-    <p>Uma nova janela "Conectar a um banco de dados" vai aparecer. Na lista, selecione PostgreSQL e clique no botão "Avançar" no final da janela.</p>
-    
-    <p>Você estará na aba "Principal" das "Configurações de Conexão". Preencha os campos da seguinte forma:</p>
-    <div id="card">
-      <p><strong>Host</strong>: Coloque o IP do Servidor Primário que você anotou na sua Ficha de Informações.</p>
-      <p><strong>Porta</strong>: Mantenha o valor padrão, que é 5432.</p>
-      <p><strong>Base de Dados</strong>: Digite thingsboard. Este é o nome padrão do banco de dados que o ThingsBoard usa.</p>
-      <p><strong>Autenticação</strong>: Mantenha "Nativa do Banco de Dados".</p>
-      <p><strong>Nome de usuário</strong>: Digite postgres (ou o superusuário que você está usando).</p>
-      <p><strong>Senha</strong>: Digite a senha deste usuário.</p>
-    </div>
-    <p>No canto inferior esquerdo da mesma janela, clique no botão "Testar conexão...". Uma janela de confirmação deve aparecer, mostrando os detalhes do driver e a versão do PostgreSQL. Se tudo estiver correto, clique em "OK".</p>
-    
-    
-    <p>Clique em "Concluir".</p>
-    
-    
-    <h4>Resultado: Você verá sua nova conexão aparecer no painel "Navegador de banco de dados" à esquerda. Ela terá um nome como thingsboard. Você pode clicar com o botão direito sobre ela e escolher "Renomear" para algo mais descritivo, como [PRIMÁRIO] ThingsBoard DB.</h4>
-    <h3>Parte 2: Conectando ao Banco de Dados RÉPLICA (Banco Espelho)</h3>
-    <p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
-    <p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
-    <p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
-    <p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
-  </div>
-  <footer>
+      
+      
+      <p><strong>sudo</strong>: Executa o comando com privilégios de administrador do sistema.</p>
+      
+      <strong>-u postgres</strong>: Especifica que o comando deve ser rodado como se você fosse o usuário do sistema postgres.
+      
+      <p><strong>psql</strong>: É o programa que você quer rodar.</p>
+      </section>
+      <section>
+        <h3>O que você deve ver:</h3>
+        <div id="card">
+        <strong>
+          <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
+          <p>Digite "help" para ajuda. </p>
+      
+          <p>postgres=#</p>
+        </strong>
+        </div>
+      
+      <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+      <img src="loginPostgres.png" alt="LoginPostgres" class="login">
+      <strong>
+      <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
+      </strong>
+      <p>O prompt <strong>postgres=#</strong> a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
+      
+      <p>**Para sair do psql e voltar ao terminal normal, digite \q e pressione Enter.**</p>
+      </section>
+      <section>
+      
+        <p>SQL (No terminal postgres=# mostrado na imagem)</p>
+        <div id="comando-container">
+        <p class="comando">CREATE ROLE <span id="nomeUsuario"></span> WITH REPLICATION LOGIN PASSWORD '<span id="SenhaReplicacao"></span>';</p>
+         <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+         </div>
+      </section>
+       <section>
+         <p>Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)</p>
+      
+             <p>Comando para abrir:</p>
+             <div id="comando-container">
+             <p class="comando">sudo nano /etc/postgresql/15/main/postgresql.conf </p>
+             <button class="copiar" onclick="copiarComando()">
+             <i class="fa-solid fa-copy"></i>
+             </button>
+             </div>
+             <p>Encontre (Linux = ctrl + w), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
+      
+             <div id="card2">
+             <ul>
+            <li>listen_addresses = '*'</li>
+            <li>wal_level = replica</li>
+            <li>max_wal_senders = 10</li>
+            <li>wal_keep_size = 256</li>
+             </ul>
+             </div>
+       </section>
+      
+      <section>
+        <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
+        <p>Comando para abrir (Linux): </p>
+        <div id="comando-container">
+        <p class="comando">sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+        <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+        <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
+        <div id="comando-container">
+        <p class="comando">host    replication    <span id="nomeUsuario"></span>    <span id="ipReplica"></span>   scram-sha-256</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+      <p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
+      <div id="comando-container">
+      <p class="comando">sudo systemctl restart postgresql</p>
+      <button class="copiar" onclick="copiarComando()">
+      <i class="fa-solid fa-copy"></i>
+      </button>
+      </div>
+      </section>
+      <section>
+      
+        <h3>Etapa 2: Preparação do Servidor RÉPLICA</h3>
+        <p>Parar e Limpar o Serviço na Réplica (CUIDADO! Recomendação: Usar um servidor réplica VAZIO, pois uma das ações será limpar todos os dados do banco de dados presentes nele!)</p>
+        <p>Linux (Terminal):</p>
+        <div id="comando-container">
+        <p class="comando">sudo systemctl stop postgresql</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+        <br>
+        <div id="comando-container">
+        <p class="comando">sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+        <strong>
+        <p>*Substitua o número pelo número da versão do seu postgres*</p>
+        </strong>
+      
+      </section>
+      <section>
+        <p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
+        <p>Linux:</p>
+        <div id="comando-container">
+        <p class="comando">sudo -u postgres pg_basebackup -h <span id="ipPrimario"></span> -U <span id="nomeUsuario"></span> -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
+         <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+        <p>(As letras em maiúsculo e minúsculo devem ficar exatamente assim)</p>
+        <strong>
+        <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
+        </strong>
+        <p>O comando pedirá a senha do usuário replicador que você anotou.</p>
+        <p>Finalização e Verificação</p>
+      </section>
+      <section>
+        <p>Iniciar Serviço na Réplica</p>
+        <p>Linux: </p>
+      
+        <div id="comando-container">
+        <p class="comando">sudo systemctl start postgresql</p>
+         <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+      </section>
+      <section>
+        <p>Verificar Status no Primário No Primário, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
+        <p>SQL (postgres=#)</p>
+      
+        <div id="comando-container">
+        <p class="comando">SELECT * FROM pg_stat_replication;</p>
+         <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+      
+        <p>Resultado esperado: Uma linha com o IP da Réplica e state como streaming.</p>
+        <p>Verificar Status na Réplica, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
+        <p>SQL  (postgres=#)</p>
+      
+        <div id="comando-container">
+        <p class="comando">SELECT pg_is_in_recovery();</p>
+        <button class="copiar" onclick="copiarComando()">
+        <i class="fa-solid fa-copy"></i>
+        </button>
+        </div>
+      
+        <p>Resultado esperado: A consulta deve retornar t (true).</p>
+      </section>
+      <section>
+        <h3>Teste Funcional</h3>
+        <p>No Primário, crie uma tabela:<strong class="comando"> CREATE TABLE teste_final (id INT);</strong></p>
+        <p>Insira um dado: <strong class="comando">INSERT INTO teste_final VALUES (100);</strong></p>
+        <p>Na Réplica, verifique se o dado apareceu:</p>
+        <p><strong class="comando">SELECT * FROM teste_final;</strong></p>
+      
+        <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
+      
+      </section>
+      <section>
+        <h3>Fazendo a Conexão no DBeaver (Visualização Recomendada)</h3>
+        <p>Para verificar se a replicação está funcionando, o ideal é ter tanto o banco de dados original (Primário) quanto o espelho (Réplica) visíveis no DBeaver. Siga os passos abaixo.</p>
+        <h4>Parte 1: Conectando ao Banco de Dados PRIMÁRIO (ThingsBoard)</h4>
+        <p>Abra o DBeaver. A tela principal será parecida com as imagens que você me enviou, com o menu "Arquivo", "Editar", etc., na parte de cima e o painel "Navegador de banco de dados" à esquerda.</p>
+      
+        <p>No canto superior esquerdo da janela, procure por um ícone que parece uma tomada de energia com um sinal de '+' sobre ele. Este é o botão de "Nova Conexão". Clique nele.</p>
+      
+        <h4>Alternativa: Se não encontrar o ícone, clique em "Banco de dados" no menu superior e depois em "Nova Conexão".</h4>
+      
+        <p>Uma nova janela "Conectar a um banco de dados" vai aparecer. Na lista, selecione PostgreSQL e clique no botão "Avançar" no final da janela.</p>
+      
+        <p>Você estará na aba "Principal" das "Configurações de Conexão". Preencha os campos da seguinte forma:</p>
+        <div id="card">
+          <p><strong>Host</strong>: Coloque o IP do Servidor Primário que você anotou na sua Ficha de Informações.</p>
+          <p><strong>Porta</strong>: Mantenha o valor padrão, que é 5432.</p>
+          <p><strong>Base de Dados</strong>: Digite thingsboard. Este é o nome padrão do banco de dados que o ThingsBoard usa.</p>
+          <p><strong>Autenticação</strong>: Mantenha "Nativa do Banco de Dados".</p>
+          <p><strong>Nome de usuário</strong>: Digite postgres (ou o superusuário que você está usando).</p>
+          <p><strong>Senha</strong>: Digite a senha deste usuário.</p>
+        </div>
+        <p>No canto inferior esquerdo da mesma janela, clique no botão "Testar conexão...". Uma janela de confirmação deve aparecer, mostrando os detalhes do driver e a versão do PostgreSQL. Se tudo estiver correto, clique em "OK".</p>
+      
+      
+        <p>Clique em "Concluir".</p>
+      
+      
+        <h4>Resultado: Você verá sua nova conexão aparecer no painel "Navegador de banco de dados" à esquerda. Ela terá um nome como thingsboard. Você pode clicar com o botão direito sobre ela e escolher "Renomear" para algo mais descritivo, como [PRIMÁRIO] ThingsBoard DB.</h4>
+      
+      </section>
+      <section>
+        <h3>Parte 2: Conectando ao Banco de Dados RÉPLICA (Banco Espelho)</h3>
+        <strong>
+          <p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
+        </strong>
+        <p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
+        <p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
+        <p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+          </div>
+      </section>
+    </main>
+  <!--<footer>
      <div id="img"><img id="GPSERS" src="logo.jpg" alt="logoGPSERS" class="GPSERS"> 
       <img id="IFPE" src="logo-ifpe.png" alt="IFPE"> 
       <img id="Facepe" src="FACEPEICON.png" alt="FACEPE" href="https://www.facepe.br/"></a>
@@ -226,5 +256,6 @@
       <br>
      <div class="nome"><p><strong>@_.juliasm | Recife 2025</strong></p></div>
   </footer>
+-->
 </body>
 </html>
