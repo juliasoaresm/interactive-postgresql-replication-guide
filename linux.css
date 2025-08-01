@@ -88,8 +88,9 @@ button:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: rgb(0, 197, 0);
     border: 1px solid #000000;
-    background-color: #eee;
+    background-color: #3f3f3f;
     padding: 1px 20px;
     min-width: 30%;
     max-width: 65vw;
@@ -108,5 +109,7 @@ button:hover {
     border: 1px solid #d8d8d8;
     background-color: #eee;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    max-width: 15%;
+    max-width: 20%;
+    font-family: 'Courier New', Courier, monospace;
+    color: green;
 }

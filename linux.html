@@ -7,7 +7,7 @@
   <link rel="icon" type="image/x-icon" href="capriccheIcon.png" />
   <link rel="stylesheet" href="linux.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="script.js"></script>
+  <script src="linux.js"></script>
 </head>
 <body>
   <div id="container">
@@ -118,7 +118,7 @@
       <p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
       <div id="comando-container">
       <p class="comando">sudo systemctl restart postgresql</p>
-      <button class="copiar" onclick="copiarComando()">
+      <button id="copiar" onclick="copiarComando()">
       <i class="fa-solid fa-copy"></i>
       </button>
       </div>
