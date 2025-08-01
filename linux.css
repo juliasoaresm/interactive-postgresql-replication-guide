@@ -8,6 +8,49 @@ button {
     padding: 9px;
 }
 
+#container {
+    display: grid;
+    grid-template-columns: 15% 73% 12%;
+    min-height: 100vh;
+}
+
+nav#sidebar-esquerda img {
+    width: 120px;
+    height: 127px;
+    margin-top: 10px;
+}
+
+nav#sidebar-esquerda {
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+nav#sidebar-esquerda ul {
+    margin-top: 20px;
+    padding: 5px;
+}
+
+nav#sidebar-esquerda li {
+    margin-bottom: 20px;
+    list-style-type: none;
+}
+
+nav#sidebar-esquerda li:hover {
+    color: rgb(0, 81, 255);
+}
+
+nav#sidebar-esquerda a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav#sidebar-esquerda a:hover {
+    color: rgb(0, 38, 255);
+}
+
 h3 {
     font-size: 25px;
 }
@@ -23,6 +66,7 @@ body {
 .comando {
      white-space: nowrap;
      padding-bottom: 5px;
+     font-family: 'Courier New', Courier, monospace;
 }
 
 .copiar {

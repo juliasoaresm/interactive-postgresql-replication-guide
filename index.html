@@ -12,13 +12,15 @@
   <div id="container">
     <nav id="sidebar-esquerda">
         <img src="capriccheIcon.png" alt="logoCapricche" class="logo">
-      <ul>
-        <li><a href="#escopo">Objetivo</a></li>
-        <li><a href="#requisitos">Requisitos</a></li>
-        <li><a href="#instalacao">Instalação</a></li>
-        <li><a href="#informacoes">Ficha de Informações</a></li>
-        <li><a href="#SO">Escolha do SO</a></li>
-      </ul>
+      <div class="lista">
+        <ul>
+          <li><a href="#escopo">Objetivo</a></li>
+          <li><a href="#requisitos">Requisitos</a></li>
+          <li><a href="#instalacao">Instalação</a></li>
+          <li><a href="#informacoes">Ficha de Informações</a></li>
+          <li><a href="#SO">Escolha do SO</a></li>
+        </ul>
+      </div>
     </nav>
 
     <main id="conteudo">
@@ -110,14 +112,31 @@
         <button onclick="location.href='windows.html'">Windows</button>
       </section>
     </main>
-  </div>
-  <footer>
-     <div id="img"><img id="GPSERS" src="logo.jpg" alt="logoGPSERS" class="GPSERS"> 
-      <img id="IFPE" src="logo-ifpe.png" alt="IFPE"> 
-      <img id="Facepe" src="FACEPEICON.png" alt="FACEPE" href="https://www.facepe.br/"></a>
-    </div> 
+    <nav id="sidebar-direita">
+      <a id="cardLink" href="https://github.com/gpsers-dexter" target="_blank">
+      <div class="card2">
+          <img id="GPSERS" src="logo.jpg" alt="Google">
+          <h3>Colaborador</h3>
+          <p>Laboratório de Pesquisa</p>
+      </div>
+      </a>
       <br>
-     <div class="nome"><p><strong>@_.juliasm | Recife 2025</strong></p></div>
-  </footer>
+      <a id="cardLink" href="https://www.facepe.br/" target="_blank">
+      <div class="card2">
+          <img id="FACEPE" src="FACEPEicon.png" alt="Google">
+          <h3>Colaborador</h3>
+          <p>FACEPE - Fundação de Amparo à Ciência e Tecnologia de Pernambuco</p>
+      </div>
+      </a>
+      <br>
+      <a id="cardLink" href="https://portal.ifpe.edu.br/" target="_blank">
+      <div class="card2">
+          <img id="IFPE" src="logo-ifpe.png" alt="Google">
+          <h3>Colaborador</h3>
+          <p>Instituto Federal de Pernambuco</p>
+      </div>
+      </a>
+    </nav>
+  </div>
 </body>
 </html>
