@@ -34,7 +34,7 @@
         </ol>
         <div id="comando-container">
         <p class="comando">sudo -u postgres psql</p>
-        <button class="copiar" onclick="copiarComando()">
+        <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -48,16 +48,14 @@
       </section>
       <section>
         <h3>O que você deve ver:</h3>
-        <div id="card">
-        <strong>
+        <div id="card3">
+        
           <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
           <p>Digite "help" para ajuda. </p>
       
           <p>postgres=#</p>
-        </strong>
         </div>
       
-      <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
       <img src="loginPostgres.png" alt="LoginPostgres" class="login">
       <strong>
       <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
@@ -71,7 +69,7 @@
         <p>SQL (No terminal postgres=# mostrado na imagem)</p>
         <div id="comando-container">
         <p class="comando">CREATE ROLE <span id="nomeUsuario"></span> WITH REPLICATION LOGIN PASSWORD '<span id="SenhaReplicacao"></span>';</p>
-         <button class="copiar" onclick="copiarComando()">
+         <button class="copiar" onclick="copiarComando(1)">
         <i class="fa-solid fa-copy"></i>
         </button>
          </div>
@@ -81,14 +79,14 @@
       
              <p>Comando para abrir:</p>
              <div id="comando-container">
-             <p class="comando">sudo nano /etc/postgresql/15/main/postgresql.conf </p>
-             <button class="copiar" onclick="copiarComando()">
+             <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/postgresql.conf </p>
+             <button class="copiar" onclick="copiarComando(2)">
              <i class="fa-solid fa-copy"></i>
              </button>
              </div>
              <p>Encontre (Linux = ctrl + w), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
       
-             <div id="card2">
+             <div id="card4">
              <ul>
             <li>listen_addresses = '*'</li>
             <li>wal_level = replica</li>
@@ -102,23 +100,22 @@
         <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
         <p>Comando para abrir (Linux): </p>
         <div id="comando-container">
-        <p class="comando">sudo nano /etc/postgresql/14/main/ppg_hba.conf</p>
-        <button class="copiar" onclick="copiarComando()">
+        <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/ppg_hba.conf</p>
+        <button class="copiar" onclick="copiarComando(3)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
-        <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
         <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
         <div id="comando-container">
         <p class="comando">host    replication    <span id="nomeUsuario"></span>    <span id="ipReplica"></span>   scram-sha-256</p>
-        <button class="copiar" onclick="copiarComando()">
+        <button class="copiar" onclick="copiarComando(4)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
       <p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
       <div id="comando-container">
       <p class="comando">sudo systemctl restart postgresql</p>
-      <button id="copiar" onclick="copiarComando()">
+      <button id="copiar" onclick="copiarComando(5)">
       <i class="fa-solid fa-copy"></i>
       </button>
       </div>
@@ -130,14 +127,14 @@
         <p>Linux (Terminal):</p>
         <div id="comando-container">
         <p class="comando">sudo systemctl stop postgresql</p>
-        <button class="copiar" onclick="copiarComando()">
+        <button class="copiar" onclick="copiarComando(6)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
         <br>
         <div id="comando-container">
-        <p class="comando">sudo -u postgres rm -rf /var/lib/postgresql/15/main/*</p>
-        <button class="copiar" onclick="copiarComando()">
+        <p class="comando">sudo -u postgres rm -rf /var/lib/postgresql/<span class="Versao"></span>/main/*</p>
+        <button class="copiar" onclick="copiarComando(7)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -150,15 +147,12 @@
         <p>Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
         <p>Linux:</p>
         <div id="comando-container">
-        <p class="comando">sudo -u postgres pg_basebackup -h <span id="ipPrimario"></span> -U <span id="nomeUsuario"></span> -p 5432 -D /var/lib/postgresql/15/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
-         <button class="copiar" onclick="copiarComando()">
+        <p class="comando">sudo -u postgres pg_basebackup -h <span id="ipPrimario"></span> -U <span id="nomeUsuario"></span> -p 5432 -D /var/lib/postgresql/<span class="Versao"></span>/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
+         <button class="copiar" onclick="copiarComando(8)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
         <p>(As letras em maiúsculo e minúsculo devem ficar exatamente assim)</p>
-        <strong>
-        <p>(Dica: Substitua "14" pela sua versão do PostgreSQL em TODOS os caminhos)</p>
-        </strong>
         <p>O comando pedirá a senha do usuário replicador que você anotou.</p>
         <p>Finalização e Verificação</p>
       </section>
@@ -168,7 +162,7 @@
       
         <div id="comando-container">
         <p class="comando">sudo systemctl start postgresql</p>
-         <button class="copiar" onclick="copiarComando()">
+         <button class="copiar" onclick="copiarComando(9)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -179,7 +173,7 @@
       
         <div id="comando-container">
         <p class="comando">SELECT * FROM pg_stat_replication;</p>
-         <button class="copiar" onclick="copiarComando()">
+         <button class="copiar" onclick="copiarComando(10)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -190,7 +184,7 @@
       
         <div id="comando-container">
         <p class="comando">SELECT pg_is_in_recovery();</p>
-        <button class="copiar" onclick="copiarComando()">
+        <button class="copiar" onclick="copiarComando(11)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -248,14 +242,5 @@
           </div>
       </section>
     </main>
-  <!--<footer>
-     <div id="img"><img id="GPSERS" src="logo.jpg" alt="logoGPSERS" class="GPSERS"> 
-      <img id="IFPE" src="logo-ifpe.png" alt="IFPE"> 
-      <img id="Facepe" src="FACEPEICON.png" alt="FACEPE" href="https://www.facepe.br/"></a>
-    </div> 
-      <br>
-     <div class="nome"><p><strong>@_.juliasm | Recife 2025</strong></p></div>
-  </footer>
--->
 </body>
 </html>

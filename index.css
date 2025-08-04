@@ -3,16 +3,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-@keyframes destaqueBrilho {
-  0%   { background-color: yellow; }
-  100% { background-color: transparent; }
-}
-
-.destacado {
-  animation: destaqueBrilho 1s ease-in-out;
-}
-
-
 #container {
     display: grid;
     grid-template-columns: 15% 73% 12%;
@@ -47,11 +37,6 @@ main {
 .card2:hover {
     cursor: pointer;
 }
-
-/*nav#sidebar-esquerda img {
-    width: 120px;
-    height: 127px;
-}*/
 
 #GPSERS {
     max-width: 70px;
