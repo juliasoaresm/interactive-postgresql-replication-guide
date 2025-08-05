@@ -16,11 +16,173 @@
     </nav>
     <main id="conteudo">
       <div id="titulo">
-            <h1>Guia de Replicação Streaming PostgreSQL (Windows)</h1>
+            <h1>Guia de Replicação Streaming PostgreSQL (Windows - Versão sem testes)</h1>
           </div>
-    5.1. Etapa 1: Configuração do Servidor PRIMÁRIO
-5.1.1. Criar Usuário de Replicação No servidor Primário, acesse o psql como superusuário e execute, usando a senha da sua Ficha:
-OBS: Como Acessar o psql como Superusuário
+          <h2>PASSO 1: Configuração da Replicação (Windows)</h2>
+      <p>Com sua Ficha de Informações preenchida, podemos começar a configuração.</p>
+    <h2>5.1. Etapa 1: Configuração do Servidor PRIMÁRIO</h2>
+    <h3>5.1.1. Criar Usuário de Replicação No servidor Primário, acesse o psql como superusuário e execute, usando a senha da sua Ficha:</h3>
+    <p>OBS: Como Acessar o psql como Superusuário</p>
+        <p>Método 1: Usando o atalho "SQL Shell (psql)" (Recomendado)</p>
+  <p>Abra o Menu Iniciar do Windows.</p>
+
+  <p>Procure pela pasta chamada PostgreSQL, que geralmente inclui o número da versão (ex: PostgreSQL 14).</p>
+
+  <p>Dentro desta pasta, clique em "SQL Shell (psql)".</p>
+
+  <p>Uma janela de terminal irá se abrir e solicitará as informações de conexão. Você pode simplesmente pressionar Enter para aceitar os valores padrão para Servidor (localhost), Banco de Dados (postgres), Porta (5432) e Usuário (postgres).</p>
+
+  <p>Por último, ele pedirá a Senha para o usuário postgres. Digite a senha que você definiu durante a instalação do PostgreSQL e pressione Enter.</p>
+
+  <p>O que você deve ver:</p>
+
+  <p>O terminal confirmará a conexão e exibirá o prompt do psql, indicando que você está conectado como superusuário:</p>
+
+  <p>psql (14.11)</p>
+  <p>Digite "help" para ajuda.</p>
+
+  <p>postgres=#</p>
+  <p>Método 2: Usando o Prompt de Comando (CMD)</p>
+  <p>Se preferir usar o Prompt de Comando padrão, você precisa navegar até a pasta de instalação do PostgreSQL.</p>
+
+  <p>Abra o Prompt de Comando (CMD).</p>
+
+  <p>Navegue até o diretório bin da sua instalação do PostgreSQL. Lembre-se de substituir "14" pela sua versão:</p>
+
+  <p>cd "C:\Program Files\PostgreSQL\14\bin"</p>
+
+  <p>Execute o seguinte comando para se conectar como o usuário postgres:</p>
+
+  <p>psql -U postgres</p>
+  <p>psql.exe: É o programa que você quer rodar.</p>
+
+  <p>-U postgres: Especifica que você quer se conectar como o usuário postgres.</p>
+
+  <p>O sistema solicitará a senha do usuário postgres. Digite-a e pressione Enter. Assim como no outro método, você verá o prompt postgres=# confirmando o acesso.</p>
+
+  <p>O prompt postgres=# é a confirmação visual de que você está dentro do PostgreSQL como o superusuário postgres. </p>
+
+<p>**Para sair do psql e voltar ao terminal normal, digite \q e pressione Enter.**</p>
+
+
+<p>SQL (No terminal postgres=# mostrado na imagem)</p>
+
+<p>CREATE ROLE replicador WITH REPLICATION LOGIN PASSWORD '<SENHA_DO_USUARIO_DE_REPLICACAO>';</p>
+<p>Comando para abrir (Windows - CMD/prompt): </p>
+
+<p>notepad "C:\Program Files\PostgreSQL\14\data\postgresql.conf"</p>
+<p>Encontre (Linux = ctrl + w // windows = ctrl + f), descomente (remova o #) e edite as seguintes linhas (Pré-existentes nos arquivos de configuração padrão do postgres):</p>
+
+<ul>
+  <li>listen_addresses = '*'</li>
+  <li>wal_level = replica</li>
+  <li>max_wal_senders = 10</li>
+  <li>wal_keep_size = 256</li>
+</ul>
+
+<p>5.1.3. Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
+<p>Comando para abrir (Windows - CMD): </p>
+
+<p>notepad "C:\Program Files\PostgreSQL\14\data\pg_hba.conf"</p>
+
+<p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
+
+<p>host    replication     replicador    <IP_DO_SERVIDOR_REPLICA>/32   scram-sha-256</p>
+
+  <p>(remova o <> também. Deixe apenas a informação)</p>
+
+  <p>5.1.4. Reiniciar Serviço do Primário</p>
+  <p>Windows (CMD como Admin): </p>
+
+  <p>net stop postgresql-x64-14 </p>
+  <p>E depois (windows):</p>
+
+  <p>net start postgresql-x64-14</p>
+
+  <p>5.2. Etapa 2: Preparação do Servidor RÉPLICA</p>
+<p>5.2.1. Parar e Limpar o Serviço na Réplica (CUIDADO! Recomendação: Usar um servidor réplica VAZIO, pois uma das ações será limpar todos os dados do banco de dados presentes nele!)</p>
+<p>Windows (CMD como Admin):</p>
+
+<p>net stop postgresql-x64-14</p>
+
+<p>cd "C:\Program Files\PostgreSQL\14"</p>
+
+<p>rmdir /s /q data</p>
+
+<p>mkdir data</p>
+
+<p>5.2.2. Executar o Backup (pg_basebackup) no terminal da Réplica, execute o comando usando o IP do Primário da sua Ficha (OBS: Se o seu servidor for muito grande e ler uma quantidade exorbitante de dados, vai demorar umas boas horas para completar. Veja o que fazer na sessão dicas.):</p>
+<p>Windows (CMD, na pasta C:\Program Files\PostgreSQL\14\bin):</p>
+ 
+<p>pg_basebackup.exe -h <IP_DO_PRIMARIO> -U replicador -p 5432 -D "C:\Program Files\PostgreSQL\14\data" -Fp -Xs -P -R</p>
+
+ <p>O comando pedirá a senha do usuário [usuario] que você anotou.</p>
+
+  <p>5.3. Etapa 3: Finalização e Verificação</p>
+<p>5.3.1. Iniciar Serviço na Réplica</p>
+<p>Windows (CMD como Admin): </p>
+
+<p>net start postgresql-x64-14</p>
+<p>5.3.2. Verificar Status no Primário No Primário, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>
+<p>SQL (postgres=#)</p>
+
+<p>SELECT * FROM pg_stat_replication;</p>
+
+<p>Resultado esperado: Uma linha com o IP da Réplica e state como streaming.</p>
+
+<p>5.3.3. Verificar Status na Réplica, acesse o psql (OBS: Como fazer isso está no início da documentação) e rode:</p>:
+<p>SQL  (postgres=#)</p>
+
+<p>SELECT pg_is_in_recovery();</p>
+
+<p>Resultado esperado: A consulta deve retornar t (true).</p>
+<p>5.3.4. Teste Funcional</p>
+<p>No Primário, crie uma tabela: CREATE TABLE teste_final (id INT);</p>
+<p>Insira um dado: INSERT INTO teste_final VALUES (100);</p>
+<p>Na Réplica, verifique se o dado apareceu: SELECT * FROM teste_final;</p>
+
+<p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
+
+<section>
+        <h3>Fazendo a Conexão no DBeaver (Visualização Recomendada)</h3>
+        <p>Para verificar se a replicação está funcionando, o ideal é ter tanto o banco de dados original (Primário) quanto o espelho (Réplica) visíveis no DBeaver. Siga os passos abaixo.</p>
+        <h4>Parte 1: Conectando ao Banco de Dados PRIMÁRIO (ThingsBoard)</h4>
+        <p>Abra o DBeaver. A tela principal será parecida com as imagens que você me enviou, com o menu "Arquivo", "Editar", etc., na parte de cima e o painel "Navegador de banco de dados" à esquerda.</p>
+      
+        <p>No canto superior esquerdo da janela, procure por um ícone que parece uma tomada de energia com um sinal de '+' sobre ele. Este é o botão de "Nova Conexão". Clique nele.</p>
+      
+        <h4>Alternativa: Se não encontrar o ícone, clique em "Banco de dados" no menu superior e depois em "Nova Conexão".</h4>
+      
+        <p>Uma nova janela "Conectar a um banco de dados" vai aparecer. Na lista, selecione PostgreSQL e clique no botão "Avançar" no final da janela.</p>
+      
+        <p>Você estará na aba "Principal" das "Configurações de Conexão". Preencha os campos da seguinte forma:</p>
+        <div id="card">
+          <p><strong>Host</strong>: Coloque o IP do Servidor Primário que você anotou na sua Ficha de Informações.</p>
+          <p><strong>Porta</strong>: Mantenha o valor padrão, que é 5432.</p>
+          <p><strong>Base de Dados</strong>: Digite thingsboard. Este é o nome padrão do banco de dados que o ThingsBoard usa.</p>
+          <p><strong>Autenticação</strong>: Mantenha "Nativa do Banco de Dados".</p>
+          <p><strong>Nome de usuário</strong>: Digite postgres (ou o superusuário que você está usando).</p>
+          <p><strong>Senha</strong>: Digite a senha deste usuário.</p>
+        </div>
+        <p>No canto inferior esquerdo da mesma janela, clique no botão "Testar conexão...". Uma janela de confirmação deve aparecer, mostrando os detalhes do driver e a versão do PostgreSQL. Se tudo estiver correto, clique em "OK".</p>
+      
+        <p>Clique em "Concluir".</p>
+      
+      
+        <h4>Resultado: Você verá sua nova conexão aparecer no painel "Navegador de banco de dados" à esquerda. Ela terá um nome como thingsboard. Você pode clicar com o botão direito sobre ela e escolher "Renomear" para algo mais descritivo, como [PRIMÁRIO] ThingsBoard DB.</h4>
+      
+      </section>
+      <section>
+        <h3>Parte 2: Conectando ao Banco de Dados RÉPLICA (Banco Espelho)</h3>
+        <strong>
+          <p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
+        </strong>
+        <p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
+        <p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
+        <p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+          </div>
+</section>
+
 
 </body>
 </html>
