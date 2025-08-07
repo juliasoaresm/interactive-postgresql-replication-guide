@@ -58,7 +58,7 @@
             <p>Abra o Prompt de Comando (CMD).</p>
             <h4>Navegue até o diretório bin da sua instalação do PostgreSQL. Lembre-se de substituir "14" pela sua versão:</h4>
             <div id="comando-container">
-              <p class="comando">cd "C:\Program Files\PostgreSQL\14\bin"</p>
+              <p class="comando">cd "C:\Program Files\PostgreSQL\<span class="Versao"></span>\bin"</p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -82,7 +82,7 @@
           <p>SQL (No terminal postgres=# mostrado na imagem)</p>
           
           <div id="comando-container">
-            <p class="comando">CREATE ROLE replicador WITH REPLICATION LOGIN PASSWORD '<SENHA_DO_USUARIO_DE_REPLICACAO>';</p>
+            <p class="comando">CREATE ROLE <span class="nomeUsuario"></span> WITH REPLICATION LOGIN PASSWORD '<span class="SenhaReplicacao"></span>';</p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -92,7 +92,7 @@
              <h3>Editar Arquivo postgresql.conf (Arquivo de configurações padrão do postgres)</h3>
                        <p>Comando para abrir (Windows - CMD/prompt): </p>
                      <div id="comando-container">
-                       <p class="comando">notepad "C:\Program Files\PostgreSQL\14\data\postgresql.conf"</p>
+                       <p class="comando">notepad "C:\Program Files\PostgreSQL\<span class="Versao"></span>\data\postgresql.conf"</p>
                        <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -113,7 +113,7 @@
           <p>Comando para abrir (Windows - CMD): </p>
           
           <div id="comando-container">
-            <p class="comando">notepad "C:\Program Files\PostgreSQL\14\data\pg_hba.conf"</p>
+            <p class="comando">notepad "C:\Program Files\PostgreSQL\<span class="Versao"></span>\data\pg_hba.conf"</p>
             <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -122,7 +122,7 @@
           <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
           
           <div id="comando-container">
-            <p class="comando">host    replication     replicador    <IP_DO_SERVIDOR_REPLICA>/32   scram-sha-256</p>
+            <p class="comando">host    replication     <span class="nomeUsuario"></span>    <span class="ipReplica"></span>/32   scram-sha-256</p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -137,7 +137,7 @@
             <p>Windows (CMD como Admin): </p>
   
             <div id="comando-container">
-              <p class="comando">net stop postgresql-x64-14 </p>
+              <p class="comando">net stop postgresql-x64-<span class="Versao"></span> </p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -145,7 +145,7 @@
             <p>E depois (windows):</p>
   
             <div id="comando-container">
-              <p class="comando">net start postgresql-x64-14</p>
+              <p class="comando">net start postgresql-x64-<span class="Versao"></span></p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -158,14 +158,14 @@
           <p>Windows (CMD como Admin):</p>
   <br>
           <div id="comando-container">
-            <p class="comando">net stop postgresql-x64-14</p>
+            <p class="comando">net stop postgresql-x64-<span class="Versao"></span></p>
             <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
           </div>
   <br>
           <div id="comando-container">
-            <p class="comando">cd "C:\Program Files\PostgreSQL\14"</p>
+            <p class="comando">cd "C:\Program Files\PostgreSQL\<span class="Versao"></span>"</p>
             <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -191,7 +191,7 @@
           <p>Windows (CMD, na pasta C:\Program Files\PostgreSQL\14\bin, onde tem postgresql=#):</p>
           
           <div id="comando-container">
-            <p class="comando">pg_basebackup.exe -h <IP_DO_PRIMARIO> -U replicador -p 5432 -D "C:\Program Files\PostgreSQL\14\data" -Fp -Xs -P -R</p>
+            <p class="comando">pg_basebackup.exe -h <span class="ipPrimario"></span> -U <span class="nomeUsuario"></span> -p 5432 -D "C:\Program Files\PostgreSQL\<span class="Versao"></span>\data" -Fp -Xs -P -R</p>
               <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -207,7 +207,7 @@
           <p>Windows (CMD como Admin): </p>
           
           <div id="comando-container">
-            <p class="comando">net start postgresql-x64-14</p>
+            <p class="comando">net start postgresql-x64-<span class="Versao"></span></p>
             <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
@@ -243,9 +243,24 @@
         </section>
 <section>
           <h3>5.3.4. Teste Funcional (Sempre no terminal SQL)</h3>
-          <p>No Primário, crie uma tabela: CREATE TABLE teste_final (id INT);</p>
-          <p>Insira um dado: INSERT INTO teste_final VALUES (100);</p>
-          <p>Na Réplica, verifique se o dado apareceu: SELECT * FROM teste_final;</p>
+          <p>No Primário, crie uma tabela: </p>
+            <div id="comando-container">
+              <p class="comando">CREATE TABLE teste_final (id INT);</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
+          <p>Insira um dado: </p>
+            <div id="comando-container">
+              <p class="comando">INSERT INTO teste_final VALUES (100);</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
+          <p>Na Réplica, verifique se o dado apareceu: </p>
+            <div id="comando-container">
+              <p class="comando">SELECT * FROM teste_final;</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
   
           <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
 </section>

@@ -1,15 +1,15 @@
 window.onload = function () {
-    const nome = localStorage.getItem("usuarioReplicacao") || "[usuário]";
+    const nome = localStorage.getItem("nomeUsuario") || "[usuario]";
     const senha = localStorage.getItem("senhaReplicacao") || "[senha]";
     const senhaSUDO = localStorage.getItem("SenhaSuperUsuario") || "[senha Super Usuario]";
     const Versao = localStorage.getItem("Versao") || "[Versão]";
     const ipPrimario = localStorage.getItem("ipPrimario") || "[ipPrimario]";
     const ipReplica = localStorage.getItem("ipReplica") || "[ipReplica]";
     document.querySelectorAll(".nomeUsuario").forEach(el => el.textContent = nome);
-    document.querySelectorAll(".SenhaReplicacao").forEach(el => el.textContent = senha);
+    document.querySelectorAll(".senhaReplicacao").forEach(el => el.textContent = senha);
     document.querySelectorAll(".ipPrimario").forEach(el => el.textContent = ipPrimario);
     document.querySelectorAll(".ipReplica").forEach(el => el.textContent = ipReplica);
-    document.querySelectorAll(".senhaSUDO").forEach(el => el.textContent = senhaSUDO);
+    document.querySelectorAll(".SenhaSuperUsuario").forEach(el => el.textContent = senhaSUDO);
     document.querySelectorAll(".Versao").forEach(el => el.textContent = Versao);
   };
 
