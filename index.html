@@ -78,7 +78,12 @@
           <ul>
             <li>
               IP do Servidor Primário
-              <input type="text" id="ipPrimario" placeholder="ex: 192.168.0.10">
+              <input type="text" id="ipPrimario" placeholder="Digite o IP..."> 
+              <select id="tipoIp">
+                <option value="Escolha">Escolha seu tipo de IP</option>
+                <option value="nat">NAT (192.168.X.X)</option>
+                <option value="bridge">Bridge (10.0.x.x)</option>
+              </select>
             </li>
             <li>
               IP do Servidor réplica
