@@ -7,6 +7,7 @@
   <link rel="icon" type="image/x-icon" href="capriccheIcon.png" />
   <script src="index.js"></script>
   <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <div id="container">
@@ -22,7 +23,6 @@
         </ul>
       </div>
     </nav>
-
     <main id="conteudo">
       <div id="titulo">
         <h1>Guia de Replicação Streaming PostgreSQL</h1>
@@ -62,7 +62,10 @@
         <p><strong>Instruções para Windows:</strong></p>
         <p>Acesse o site oficial: <a href="https://www.postgresql.org/download/windows/">Link</a></p>
         <p>Durante a instalação, ele pedirá para você definir uma senha para o superusuário postgres. CRIE UMA SENHA FORTE, ANOTE-A E GUARDE-A.</p>
-        <p>!!LEMBRE!! SEU POSTGRES DA MÁQUINA PRIMÁRIA TEM QUE ESTAR NA MESMA VERSÃO DA RÉPLICA.</p>
+        <div class="lembreteCard">
+          <p><i class="fa-solid fa-triangle-exclamation"></i>LEMBRE<i class="fa-solid fa-triangle-exclamation"></i> </p>
+            <p>SEU POSTGRES DA MÁQUINA PRIMÁRIA TEM QUE ESTAR NA MESMA VERSÃO DA RÉPLICA.</p>
+        </div>
 
         <h4>3.3. Instalação do DBeaver (Altamente Recomendado)</h4>
         <p>Instale o DBeaver em pelo menos uma das máquinas (recomendado: máquina primária).</p>
@@ -78,16 +81,11 @@
           <ul>
             <li>
               IP do Servidor Primário
-              <input type="text" id="ipPrimario" placeholder="Digite o IP..."> 
-              <select id="tipoIp">
-                <option value="Escolha">Escolha seu tipo de IP</option>
-                <option value="nat">NAT (192.168.X.X)</option>
-                <option value="bridge">Bridge (10.0.x.x)</option>
-              </select>
+              <input type="text" id="ipPrimario" placeholder="Digite o IP...">
             </li>
             <li>
               IP do Servidor réplica
-              <input type="text" id="ipReplica" placeholder="ex: 192.168.0.11">
+              <input type="text" id="ipReplica" placeholder="Digite o IP...">
             </li>
             <li>
               Nome para o Usuário de Replicação
@@ -125,7 +123,7 @@
       <a id="cardLink" href="https://github.com/gpsers-dexter" target="_blank">
       <div class="card2">
           <img id="GPSERS" src="logo.jpg" alt="Google">
-          <h3>Colaborador</h3>
+          <h3 class="colab">Colaborador</h3>
           <p>Laboratório de Pesquisa</p>
       </div>
       </a>
@@ -133,7 +131,7 @@
       <a id="cardLink" href="https://www.facepe.br/" target="_blank">
       <div class="card2">
           <img id="FACEPE" src="FACEPEicon.png" alt="Google">
-          <h3>Colaborador</h3>
+          <h3 class="colab">Colaborador</h3>
           <p>FACEPE - Fundação de Amparo à Ciência e Tecnologia de Pernambuco</p>
       </div>
       </a>
@@ -141,7 +139,7 @@
       <a id="cardLink" href="https://portal.ifpe.edu.br/" target="_blank">
       <div class="card2">
           <img id="IFPE" src="logo-ifpe.png" alt="Google">
-          <h3>Colaborador</h3>
+          <h3 class="colab">Colaborador</h3>
           <p>Instituto Federal de Pernambuco</p>
       </div>
       </a>

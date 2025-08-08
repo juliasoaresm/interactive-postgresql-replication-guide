@@ -3,6 +3,10 @@ body {
     font-family: Arial, sans-serif;
 }
 
+i {
+    color: rgb(255, 0, 0);
+}
+
 #container {
     display: grid;
     grid-template-columns: 15% 73% 12%;
@@ -15,8 +19,18 @@ main {
 
 #card {
     border: 1px solid #d8d8d8;
-    background-color: #eee;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    background-color: #d8d8d8;
+}
+
+.lembreteCard {
+    border: 1px solid #d8d8d8;
+    background-color: #d8d8d8;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+    width: 30%;
+    height: 120px;
 }
 
 .card2 {
@@ -25,7 +39,7 @@ main {
     padding: 20px;
     width: 145px;
     text-align: center;
-    background-color: #eee;
+    background-color: #d8d8d8;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -46,7 +60,7 @@ main {
 }
 
 nav#sidebar-esquerda {
-    background-color: #ebebeb;
+    background-color: #d8d8d8;
     padding: 20px;
     border-right: 1px solid #ebebeb;
     position: sticky;
@@ -89,7 +103,7 @@ nav#sidebar-esquerda a:hover {
 }
 
 #sidebar-direita {
-    background-color: #ffffff;
+    background-color: white;
     padding: 20px;
     border: none;
     position: sticky;
@@ -99,6 +113,11 @@ nav#sidebar-esquerda a:hover {
 
 h1, h3, h4 {
     color: #333;
+}
+
+h3.colab {
+    color: black;
+    font-weight: bolder;
 }
 
 button {
@@ -128,14 +147,4 @@ img {
     max-height: 90px;
     border-radius: 20%;
     margin-top: 10px;
-}
-
-footer {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    height: 167px;
-    background-color: #f8f8f8;
 }
