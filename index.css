@@ -39,7 +39,7 @@ main {
     padding: 20px;
     width: 145px;
     text-align: center;
-    background-color: #d8d8d8;
+    background-color: #e6e6e6;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
 }
 
@@ -60,7 +60,7 @@ main {
 }
 
 nav#sidebar-esquerda {
-    background-color: #d8d8d8;
+    background-color: #eeeeee;
     padding: 20px;
     border-right: 1px solid #ebebeb;
     position: sticky;
@@ -89,12 +89,12 @@ nav#sidebar-esquerda li:hover {
 
 nav#sidebar-esquerda a {
     text-decoration: none;
-    color: #333;
+    color: #000000;
     font-weight: bold;
 }
 
 nav#sidebar-esquerda a:hover {
-    color: rgb(0, 38, 255);
+    color: rgb(255, 0, 0);
 }
 
 #conteudo {
