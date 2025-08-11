@@ -93,6 +93,10 @@ nav#sidebar-esquerda a {
     font-weight: bold;
 }
 
+nav#sidebar-esquerda h2 {
+    text-align: center;
+}
+
 nav#sidebar-esquerda a:hover {
     color: rgb(255, 0, 0);
 }
