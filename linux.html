@@ -68,7 +68,7 @@
         <p>SQL (No terminal postgres=# mostrado na imagem)</p>
         <div id="comando-container">
         <p class="comando">CREATE ROLE <span class="nomeUsuario"></span> WITH REPLICATION LOGIN PASSWORD '<span class="senhaReplicacao"></span>';</p>
-         <button class="copiar" onclick="copiarComando(1)">
+         <button class="copiar" onclick="copiarComando(0)">
         <i class="fa-solid fa-copy"></i>
         </button>
          </div>
@@ -79,7 +79,7 @@
              <p>Comando para abrir:</p>
              <div id="comando-container">
              <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/postgresql.conf </p>
-             <button class="copiar" onclick="copiarComando(2)">
+             <button class="copiar" onclick="copiarComando(1)">
              <i class="fa-solid fa-copy"></i>
              </button>
              </div>
@@ -100,21 +100,21 @@
         <p>Comando para abrir (Linux): </p>
         <div id="comando-container">
         <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/ppg_hba.conf</p>
-        <button class="copiar" onclick="copiarComando(3)">
+        <button class="copiar" onclick="copiarComando(2)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
         <p>Adicione esta linha no final, usando o IP da Réplica da sua Ficha:</p>
         <div id="comando-container">
         <p class="comando">host    replication    <span class="nomeUsuario"></span>    <span class="ipReplica"></span>/32   scram-sha-256</p>
-        <button class="copiar" onclick="copiarComando(4)">
+        <button class="copiar" onclick="copiarComando(3)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
       <p>Reiniciar Serviço do Primário com o comando abaixo (no terminal normal) após salvar e sair do arquivo hba:</p>
       <div id="comando-container">
       <p class="comando">sudo systemctl restart postgresql</p>
-      <button id="copiar" onclick="copiarComando(5)">
+      <button id="copiar" onclick="copiarComando(4)">
       <i class="fa-solid fa-copy"></i>
       </button>
       </div>
@@ -126,14 +126,14 @@
         <p>Linux (Terminal):</p>
         <div id="comando-container">
         <p class="comando">sudo systemctl stop postgresql</p>
-        <button class="copiar" onclick="copiarComando(6)">
+        <button class="copiar" onclick="copiarComando(5)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
         <br>
         <div id="comando-container">
         <p class="comando">sudo -u postgres rm -rf /var/lib/postgresql/<span class="Versao"></span>/main/*</p>
-        <button class="copiar" onclick="copiarComando(7)">
+        <button class="copiar" onclick="copiarComando(6)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -147,7 +147,7 @@
         <p>Linux:</p>
         <div id="comando-container">
         <p class="comando">sudo -u postgres pg_basebackup -h <span class="ipPrimario"></span> -U <span class="nomeUsuario"></span> -p 5432 -D /var/lib/postgresql/<span class="Versao"></span>/main -Fp -Xs -P -R</p> <div id="mensagem"></div>
-         <button class="copiar" onclick="copiarComando(8)">
+         <button class="copiar" onclick="copiarComando(7)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -161,7 +161,7 @@
       
         <div id="comando-container">
         <p class="comando">sudo systemctl start postgresql</p>
-         <button class="copiar" onclick="copiarComando(9)">
+         <button class="copiar" onclick="copiarComando(8)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -172,7 +172,7 @@
       
         <div id="comando-container">
         <p class="comando">SELECT * FROM pg_stat_replication;</p>
-         <button class="copiar" onclick="copiarComando(10)">
+         <button class="copiar" onclick="copiarComando(9)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>
@@ -183,7 +183,7 @@
       
         <div id="comando-container">
         <p class="comando">SELECT pg_is_in_recovery();</p>
-        <button class="copiar" onclick="copiarComando(11)">
+        <button class="copiar" onclick="copiarComando(10)">
         <i class="fa-solid fa-copy"></i>
         </button>
         </div>

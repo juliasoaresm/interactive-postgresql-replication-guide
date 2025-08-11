@@ -17,7 +17,7 @@ window.onload = function () {
   const comandos = document.querySelectorAll(".comando");
   const botoes = document.querySelectorAll(".copiar");
   const comando = comandos[indice];
-  const botao = botoes[indice];
+  const botao = botoes[indice+1];
   const texto = comando.innerText || comando.textContent;
   navigator.clipboard.writeText(texto);
   const icone = botao.querySelector("i");

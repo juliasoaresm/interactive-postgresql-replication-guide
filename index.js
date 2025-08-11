@@ -8,14 +8,13 @@ function salvar() {
     if (document.getElementById("Versao").value > "18") {
         alert("Versão inválida, por favor, verifique a versão do seu sistema.");
     }
-    const salvo = document.querySelector("button.submit");
+    const salvo = document.querySelector(".submit");
     if (salvo) {
         salvo.classList.remove("Salvar");
-        salvo.classList.add("fa-check");
+        salvo.innerText = "Salvo";
 
         setTimeout(() => {
-                salvo.classList.remove("fa-check");
-            salvo.classList.add("Salvar");
-        }, 1000);
+                salvo.innerText = "Salvar";
+        }, 500);
     }
 }
