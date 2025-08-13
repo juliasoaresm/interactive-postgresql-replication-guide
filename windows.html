@@ -26,24 +26,32 @@
     <h3>Método 1: Usando o atalho "SQL Shell (psql)" (Recomendado)</h3>
     <p>Abra o Menu Iniciar do Windows.</p>
                       
-    <p>Procure pela pasta chamada PostgreSQL, que geralmente inclui o número da versão (ex: PostgreSQL 14).</p>
+    <p>Procure pela pasta chamada <strong>PostgreSQL</strong>, que geralmente inclui o número da versão (ex: PostgreSQL 14).</p>
                       
-    <p>Dentro desta pasta, clique em "SQL Shell (psql)".</p>
+    <p>Dentro desta pasta, clique em <strong>"SQL Shell (psql)"</strong>.</p>
                       
-    <p>Uma janela de terminal irá se abrir e solicitará as informações de conexão. Você pode simplesmente pressionar Enter para aceitar os valores padrão para Servidor (localhost), Banco de Dados (postgres), Porta (5432) e Usuário (postgres).</p>
+    <p>Uma janela de terminal irá se abrir e solicitará as informações de conexão. Você pode simplesmente pressionar Enter para aceitar os valores padrão para</p> 
+      <div id="card4">
+        <ul><strong>
+          <li>Servidor (localhost) </li>
+          <li>Banco de Dados (postgres)</li>
+          <li>Porta (5432) </li>
+          <li>Usuário (postgres)</li>
+        </strong></ul>
+      </div>
                       
     <p>Por último, ele pedirá a Senha para o usuário postgres. Digite a senha que você definiu durante a instalação do PostgreSQL e pressione Enter.</p>
             </section>
           <section>
         <h3>O que você deve ver:</h3>
-        <div id="card">
+        <div id="card2">
         
           <p>psql (14.11 (Ubuntu 14.11-0ubuntu0.22.04.1)) </p>
           <p>Digite "help" para ajuda. </p>
       
           <p>postgres=#</p>
         </div>
-      
+      <br>
       <img src="telaPostWin.png" alt="LoginPostgres" class="login">
       <strong>
       <p>IMAGEM DE OUTRA VERSÃO WINDOWS. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
@@ -278,7 +286,7 @@
           <p>Uma nova janela "Conectar a um banco de dados" vai aparecer. Na lista, selecione PostgreSQL e clique no botão "Avançar" no final da janela.</p>
         
           <p>Você estará na aba "Principal" das "Configurações de Conexão". Preencha os campos da seguinte forma:</p>
-          <div id="card">
+          <div id="card5">
             <p><strong>Host</strong>: Coloque o IP do Servidor Primário que você anotou na sua Ficha de Informações.</p>
             <p><strong>Porta</strong>: Mantenha o valor padrão, que é 5432.</p>
             <p><strong>Base de Dados</strong>: Digite thingsboard. Este é o nome padrão do banco de dados que o ThingsBoard usa.</p>
@@ -299,12 +307,32 @@
           <strong>
             <p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
           </strong>
-          <p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
-          <p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
-          <p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+          <div id="card5">
+            <p><strong>Host:</strong> Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
+            <p><strong>Base de Dados: </strong> Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
+            <p><strong>Nome de usuário/Senha:</strong> Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+          </div>
             </div>
         </section>
       </main>
-
+      <br>
+      <br>
+      <footer>
+        <div class="footer">
+          <div class="information">
+            <p>Documentação criada por Julia Soares | ComPET Smart Factoring for Capricche | 2025</p>
+          </div>
+          <div class="icons">
+            <a href="https://github.com/juliasoaresm">
+              <img src="githubicon.png" alt="Github Icon" class="github">
+            </a>
+            <a href="https://www.linkedin.com/in/julia-soares-monteiro-518a472b8/">
+              <img src="linkedinIcon.png" alt="Linkedin Icon" class="Linkedin">
+            </a>
+            <br>
+          </div>
+          <br>
+        </div>
+        </footer>
 </body>
 </html>

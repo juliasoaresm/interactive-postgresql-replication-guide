@@ -10,13 +10,20 @@ body {
 }
 
 h1, h2, h3, h4 {
-    color: #333;
+    color: #141414;
 }
 
 .comando {
      white-space: nowrap;
      padding-bottom: 5px;
      font-family: 'Courier New', Courier, monospace;
+}
+
+nav #sidebar-esquerda {
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
 }
 
 .copiar {
@@ -26,11 +33,13 @@ h1, h2, h3, h4 {
 .Voltar {
     border: none;
     width: 60px;
-    height: 50px;
+    background-color: #dfdfdf;
+    height: 40px;
+    margin: 10px;
 }
 
 button {
-    background-color: #f0f0f0;
+    background-color: #dfdfdf;
     color: #333;
     border: 1px solid #000000;
     border-radius: 5px;
@@ -39,7 +48,7 @@ button {
 }
 
 button:hover {
-    background-color: #cacaca;
+    background-color: #b4b4b4;
     color: #333;
     border: 1px solid #000000;
     border-radius: 5px;
@@ -48,17 +57,17 @@ button:hover {
 }
 
 .Voltar:hover {
-    background-color: rgb(170, 170, 170);
-    padding: 12px;
+    background-color: rgb(194, 194, 194);
+    padding: 10px;
+    border: none;
     cursor: pointer;
-    font-weight: bolder;
 }
 
 #comando-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgb(0, 197, 0);
+    color: rgb(233, 233, 233);
     border: 1px solid #000000;
     background-color: #3f3f3f;
     padding: 1px 20px;
@@ -69,10 +78,72 @@ button:hover {
 
 #card4 {
     border: 1px solid #d8d8d8;
-    background-color: #eee;
+    background-color: #e4e4e4;
+    box-shadow: 3px 3px 6px rgba(29, 29, 29, 0.3);
+    max-width: 30%;
+    font-weight: bold;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(43, 43, 43);
+}
+
+#card2 {
+    border: 1px solid #d8d8d8;
+    background-color: #e4e4e4;
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
     max-width: 30%;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    color: green;
+    color: rgb(43, 43, 43);
+}
+
+#card2 p {
+    margin: 0;
+    padding: 15px;
+}
+
+#card5 {
+    border: 1px solid #d8d8d8;
+    background-color: #e4e4e4;
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    max-width: 30%;
+    padding: 10px;
+    color: rgb(43, 43, 43);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    background-color: #d6d6d6;
+}
+
+footer p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+footer div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.github {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+}
+
+.Linkedin {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    height: 20px;
 }
