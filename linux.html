@@ -54,7 +54,7 @@
       
           <p>postgres=#</p>
         </div>
-      
+      <br>
       <img src="loginPostgres.png" alt="LoginPostgres" class="login">
       <strong>
       <p>IMAGEM DE OUTRA VERSÃO LINUX. POSSIVELMENTE O SEU ESTARÁ DIFERENTE.</p>
@@ -191,11 +191,25 @@
         <p>Resultado esperado: A consulta deve retornar t (true).</p>
       </section>
       <section>
-        <h3>Teste Funcional</h3>
-        <p>No Primário, crie uma tabela:<strong class="comando"> CREATE TABLE teste_final (id INT);</strong></p>
-        <p>Insira um dado: <strong class="comando">INSERT INTO teste_final VALUES (100);</strong></p>
-        <p>Na Réplica, verifique se o dado apareceu:</p>
-        <p><strong class="comando">SELECT * FROM teste_final;</strong></p>
+        <h3>5.3.4. Teste Funcional (Sempre no terminal SQL)</h3>
+          <p>No Primário, crie uma tabela: </p>
+            <div id="comando-container">
+              <p class="comando">CREATE TABLE teste_final (id INT);</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
+          <p>Insira um dado: </p>
+            <div id="comando-container">
+              <p class="comando">INSERT INTO teste_final VALUES (100);</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
+          <p>Na Réplica, verifique se o dado apareceu: </p>
+            <div id="comando-container">
+              <p class="comando">SELECT * FROM teste_final;</p>
+              <button class="copiar" onclick="copiarComando(0)">
+        <i class="fa-solid fa-copy"></i>
+            </div>
       
         <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
       
@@ -235,11 +249,32 @@
         <strong>
           <p>Agora, para adicionar o Banco Espelho, você vai repetir exatamente os mesmos passos (do 1 ao 6) acima, alterando apenas as seguintes informações no Passo 4:</p>
         </strong>
-        <p>Host: Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
-        <p>Base de Dados: Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
-        <p>Nome de usuário / Senha: Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+        <div id="card">
+          <p><strong>Host:</strong> Desta vez, coloque o IP do Servidor Réplica que você anotou.</p>
+          <p><strong>Base de Dados:</strong> Deixe o padrão postgres (ou digite thingsboard se o backup inicial já foi feito).</p>
+          <p><strong>Nome de usuário/Senha:</strong> Use o usuário e senha correspondentes ao seu servidor Réplica.</p>
+        </div>
           </div>
       </section>
     </main>
+    <br>
+    <br>
+    <footer>
+        <div class="footer">
+          <div class="information">
+            <p>Documentação criada por Julia Soares | ComPET Smart Factoring for Capricche | 2025</p>
+          </div>
+          <div class="icons">
+            <a href="https://github.com/juliasoaresm">
+              <img src="githubicon.png" alt="Github Icon" class="github">
+            </a>
+            <a href="https://www.linkedin.com/in/julia-soares-monteiro-518a472b8/">
+              <img src="linkedinIcon.png" alt="Linkedin Icon" class="Linkedin">
+            </a>
+            <br>
+          </div>
+          <br>
+        </div>
+        </footer>
 </body>
 </html>
