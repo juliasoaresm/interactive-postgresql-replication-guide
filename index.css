@@ -14,7 +14,7 @@ i {
 }
 
 main {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(238, 238, 238);
 }
 
 #card {
@@ -23,14 +23,18 @@ main {
 }
 
 .lembreteCard {
-    border: 1px solid #d8d8d8;
-    background-color: #d8d8d8;
+    border: 1px solid #495566;
+    background-color: #495566;
     box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
     text-align: center;
     align-items: center;
     padding-top: 10px;
     width: 30%;
     height: 120px;
+}
+
+.lembreteCard p {
+    color: #e6e6e6;
 }
 
 .card2 {
@@ -65,7 +69,7 @@ main {
 }
 
 nav#sidebar-esquerda {
-    background-color: #eeeeee;
+    background-color: #495566;
     padding: 20px;
     border-right: 1px solid #ebebeb;
     position: sticky;
@@ -94,13 +98,14 @@ nav#sidebar-esquerda li:hover {
 
 nav#sidebar-esquerda a {
     text-decoration: none;
-    color: #000000;
+    color: #e6e6e6;
     font-weight: bold;
 }
 
 .parceiros {
     text-align: center;
     padding: 5px;
+    color: #e6e6e6;
 }
 
 .parceiros h2 {
@@ -129,7 +134,7 @@ nav#sidebar-esquerda a:hover {
 }
 
 nav#sidebar-direita {
-    background-color: white;
+    background-color: #495566;
     padding: 10px;
     border: none;
     position: sticky;
@@ -179,7 +184,7 @@ img {
 footer {
     display: flex;
     justify-content: center;
-    background-color: #d6d6d6;
+    background-color: #546174;;
     width: 100%;
     height: 80px;
     box-sizing: border-box;
@@ -187,6 +192,7 @@ footer {
 
 footer p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #e6e6e6;
 }
 
 footer div {
