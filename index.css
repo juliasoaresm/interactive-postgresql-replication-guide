@@ -1,10 +1,24 @@
+:root {
+    --primary-color: #4a90e2; /* Azul vibrante */
+    --background-color: #1a1a1a; /* Fundo escuro principal */
+    --surface-color: #2c2c2c; /* Superfícies um pouco mais claras que o fundo */
+    --text-color: #f0f0f0; /* Texto claro para fundo escuro */
+    --text-secondary-color: #a0a0a0; /* Texto secundário para contraste */
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color); 
 }
 
 i {
-    color: rgb(255, 0, 0);
+    color: var(--primary-color);
+}
+
+#link {
+    color: #6dadf7;
 }
 
 #container {
@@ -14,42 +28,71 @@ i {
 }
 
 main {
-    background-color: rgb(238, 238, 238);
+    background-color: var(--background-color); 
+    color: var(--text-color);
 }
 
 #card {
-    border: 1px solid #d8d8d8;
-    background-color: #d8d8d8;
+    border: 1px solid var(--surface-color); 
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    padding: 20px; 
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+#card ul {
+    list-style: none;
+    padding: 0;
+}
+
+#card li {
+    margin-bottom: 10px;
+}
+
+#card input[type="text"],
+#card input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid var(--text-secondary-color);
+    background-color: #3a3a3a; 
+    color: var(--text-color);
+    border-radius: 4px;
 }
 
 .lembreteCard {
-    border: 1px solid #495566;
-    background-color: #495566;
-    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--primary-color); 
+    background-color: var(--surface-color); 
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.5); 
     text-align: center;
     align-items: center;
-    padding-top: 10px;
+    padding: 15px;
     width: 30%;
-    height: 120px;
+    margin: 20px auto; 
+    border-radius: 8px;
 }
 
 .lembreteCard p {
-    color: #e6e6e6;
+    color: var(--text-color);
+    margin: 5px 0;
 }
 
 .card2 {
     border-radius: 10px;
-    margin: 2px;
-    padding: 3px;
-    width: 145px;
+    margin: 5px; 
+    padding: 10px; 
+    width: 160px; 
     text-align: center;
-    background-color: #e6e6e6;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    background-color: #3f3f3f; 
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4); 
+    color: var(--text-color);
 }
 
 .information p {
     margin: 0px;
     margin-top: 15px;
+    color: var(--text-color); 
 }
 
 #cardLink {
@@ -59,22 +102,35 @@ main {
 
 .card2:hover {
     cursor: pointer;
+    background-color: #3a3a3a; 
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
 }
 
-#GPSERS {
-    width: 65px;
-    height: 65px;
+#GPSERS, #INSTITUTO, #STARTUP, #CLOUDMASTER { 
+    width: 70px;
+    height: 70px;
+    border-radius: 50%; 
+    margin-top: 10px;
+    object-fit: contain; 
+    background-color: var(--background-color);
+    padding: 5px;
+}
+
+#FACEPE, #IFPE {
+    width: 80px;
+    height: 60px;
     border-radius: 20%;
     margin-top: 10px;
 }
 
 nav#sidebar-esquerda {
-    background-color: #495566;
+    background-color: var(--surface-color);
     padding: 20px;
-    border-right: 1px solid #ebebeb;
+    border-right: 1px solid #3a3a3a; 
     position: sticky;
     top: 0;
     height: 100vh;
+    box-sizing: border-box; 
 }
 
 nav#sidebar-esquerda ul {
@@ -90,27 +146,31 @@ nav#sidebar-esquerda li {
 .logo {
     width: 110px;
     height: 120px;
+    display: block;
+    margin: 0 auto 20px auto;
 }
 
 nav#sidebar-esquerda li:hover {
-    color: rgb(0, 81, 255);
+    color: var(--primary-color);
 }
 
 nav#sidebar-esquerda a {
     text-decoration: none;
-    color: #e6e6e6;
+    color: var(--text-color); 
     font-weight: bold;
+    display: block;
+    padding: 5px 0;
 }
 
 .parceiros {
     text-align: center;
     padding: 5px;
-    color: #e6e6e6;
+    color: var(--text-color); 
 }
 
 .parceiros h2 {
     margin: 0px;
-
+    color: var(--primary-color); 
 }
 
 nav#sidebar-esquerda h2 {
@@ -118,11 +178,11 @@ nav#sidebar-esquerda h2 {
 }
 
 nav#sidebar-esquerda a:hover {
-    color: rgb(255, 0, 0);
+    color: var(--primary-color);
 }
 
 #conteudo {
-    padding: 20px;
+    padding: 40px;
     overflow-y: auto;
 }
 
@@ -130,33 +190,49 @@ nav#sidebar-esquerda a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 nav#sidebar-direita {
-    background-color: #495566;
-    padding: 10px;
-    border: none;
+    background-color: var(--surface-color);
+    padding: 20px 10px; 
+    border-left: 1px solid #3a3a3a; 
     position: sticky;
     top: 0;
-    height: 100vh; 
+    height: 100vh;
+    box-sizing: border-box;
 }
 
-h1, h3, h4 {
-    color: #333;
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+p {
+    color: var(--text-color); 
+    line-height: 1.7; 
 }
 
 h3.colab {
-    color: black;
+    color: var(--primary-color); 
     font-weight: bolder;
-    margin: 5px;
+    margin: 5px 0;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 10px;
+    padding: 12px 25px; 
+    margin: 15px 10px 15px 0; 
     font-size: 16px;
     cursor: pointer;
+    background-color: var(--primary-color); 
+    color: var(--text-color); 
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3a7acc; 
 }
 
 img {
@@ -167,101 +243,187 @@ img {
     text-align: center;
 }
 
-#FACEPE {
-    width: 80px;
-    height: 60px;
-    border-radius: 20%;
-    margin-top: 10px;
-}
-
-#IFPE {
-    width: 80px;
-    height: 60px;
-    border-radius: 20%;
-    margin-top: 10px;
-}
-
 footer {
     display: flex;
     justify-content: center;
-    background-color: #546174;;
+    background-color: var(--surface-color); 
     width: 100%;
-    height: 80px;
+    height: auto; 
+    /* padding: 15px 0;  */
     box-sizing: border-box;
+    border-top: 1px solid #3a3a3a;
 }
 
 footer p {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #e6e6e6;
+    font-family: 'Verdana', Geneva, Tahoma, sans-serif;
+    color: var(--text-secondary-color); 
+    font-size: 0.9em;
 }
 
-footer div {
+footer div.footer { 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 5px;
+    width: 100%; 
 }
 
 .icons {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 10px;
+    gap: 15px; 
+    margin-top: 10px;
 }
 
-.github {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github, .Linkedin { 
+    width: 24px; 
+    height: 24px;
+    transition: transform 0.2s ease;
 }
 
-.Linkedin {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github:hover, .Linkedin:hover {
+    transform: scale(1.1);
 }
+
 
 /* ================================================================ */
 /* --- AJUSTES DE RESPONSIVIDADE PARA NOTEBOOKS (Desktop-First) --- */
-/* Adicione este bloco ao final do seu CSS atual.                  */
 /* ================================================================ */
 
-/* Quando a tela tiver 1440px de largura OU MENOS... */
 @media (max-width: 1440px) {
     body {
-        /* Reduz um pouco a fonte base para caber melhor o texto */
-        font-size: 15px; 
+        font-size: 15px;
     }
 
     #container {
-        /* Damos mais espaço ao conteúdo principal, diminuindo as barras laterais.
-           Usar pixels fixos aqui é um ótimo padrão, pois garante que as
-           laterais não fiquem muito espremidas. */
-        grid-template-columns: 220px 1fr 220px; 
+        grid-template-columns: 220px 1fr 220px;
     }
 
     main#conteudo {
-        /* Reduzimos o espaçamento interno para ganhar espaço */
         padding: 25px;
+    }
+
+    .lembreteCard {
+        width: 40%; /* Ajuste a largura do lembreteCard para telas maiores */
+        padding: 10px;
+    }
+
+    .card2 {
+        width: 150px; /* Ajuste para caber 3 colunas, se necessário */
+        padding: 8px;
+    }
+
+    #GPSERS, #INSTITUTO, #STARTUP, #CLOUDMASTER {
+        width: 60px;
+        height: 60px;
     }
 }
 
-/* Quando a tela tiver 1280px de largura OU MENOS... */
 @media (max-width: 1280px) {
     body {
-        font-size: 14px; /* Reduzimos um pouco mais a fonte */
+        font-size: 14px;
     }
 
     #container {
-        /* Deixamos as barras laterais ainda mais compactas */
         grid-template-columns: 200px 1fr 200px;
     }
 
     .lembreteCard {
-        /* O card de lembrete pode ocupar mais espaço para não quebrar o texto */
-        width: 60%;
+        width: 50%; /* O card de lembrete pode ocupar mais espaço para não quebrar o texto */
+    }
+
+    .card2 {
+        width: 130px; /* Reduzindo um pouco mais o card */
+    }
+
+    #GPSERS, #INSTITUTO, #STARTUP, #CLOUDMASTER {
+        width: 55px;
+        height: 55px;
+    }
+
+    nav#sidebar-esquerda .logo {
+        width: 90px;
+        height: 100px;
+    }
+}
+
+/* Adicionando responsividade para telas menores (celulares e tablets) */
+@media (max-width: 768px) {
+    #container {
+        grid-template-columns: 1fr; /* Uma única coluna */
+        grid-template-rows: auto 1fr auto auto; /* Header, Main, Sidebars, Footer */
+    }
+
+    nav#sidebar-esquerda, nav#sidebar-direita {
+        position: relative; /* Remove sticky */
+        height: auto; /* Altura automática */
+        border-right: none;
+        border-left: none;
+        padding: 15px;
+    }
+
+    nav#sidebar-esquerda {
+        order: 1; /* Sidebar esquerda primeiro no mobile */
+        border-bottom: 1px solid #3a3a3a;
+    }
+
+    main#conteudo {
+        order: 2; /* Conteúdo principal no meio */
+        padding: 20px;
+    }
+
+    nav#sidebar-direita {
+        order: 3; /* Sidebar direita antes do footer */
+        border-top: 1px solid #3a3a3a;
+    }
+
+    .logo {
+        margin: 0 auto 10px auto;
+    }
+
+    nav#sidebar-esquerda ul {
+        display: flex; /* Transforma a lista de links em linha */
+        flex-wrap: wrap; /* Quebra em múltiplas linhas se necessário */
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    nav#sidebar-esquerda li {
+        margin: 5px 10px;
+    }
+
+    .lembreteCard {
+        width: 80%; /* Mais largura para o card em telas pequenas */
+        margin: 15px auto;
+    }
+
+    .cardsParceiros {
+        flex-direction: row; /* Cards de parceiros em linha */
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .card2 {
+        width: 100px; /* Reduz o tamanho dos cards de parceiro */
+        padding: 5px;
+    }
+
+    #GPSERS, #INSTITUTO, #STARTUP, #CLOUDMASTER {
+        width: 40px;
+        height: 40px;
+        margin-top: 5px;
+    }
+
+    footer .information {
+        order: 2; /* Informações embaixo no footer mobile */
+        margin-top: 10px;
+    }
+
+    footer .icons {
+        order: 1; /* Ícones em cima no footer mobile */
+        margin-bottom: 10px;
     }
 }

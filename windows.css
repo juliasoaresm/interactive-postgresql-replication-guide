@@ -1,127 +1,183 @@
-#container {
-    display: grid;
-    grid-template-columns: 15% 73% 12%;
+:root {
+    --primary-color: #4a90e2;
+    --background-color: #1a1a1a;
+    --surface-color: #2c2c2c;
+    --text-color: #f0f0f0;
+    --text-secondary-color: #a0a0a0;
+}
+
+/* Base e Layout */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%; /* Corrigido para garantir o alinhamento */
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+#container {
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+    /* min-height: 100vh;  */
+    flex: 1;
 }
 
-h1, h2, h3, h4 {
-    color: #141414;
+main {
+    background-color: var(--background-color);
+    padding: 40px;
 }
 
-h3 {
-    font-size: 25px;
-}
-
-.comando {
-     white-space: nowrap;
-     padding-bottom: 5px;
-     font-family: 'Courier New', Courier, monospace;
-}
-
-nav #sidebar-esquerda {
+/* Sidebar */
+#sidebar-esquerda {
+    background-color: var(--surface-color);
     padding: 20px;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-}
-
-.copiar {
-  margin-left: 10px;
+    /* position: sticky; */
+    /* top: 0; */
+    /* height: 100%; */
+    border-right: 1px solid #3a3a3a;
+    border-bottom: 1px solid #3a3a3a;
 }
 
 .Voltar {
     border: none;
     width: 60px;
-    background-color: #dfdfdf;
     height: 40px;
     margin: 10px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    font-weight: bold;
 }
 
+.Voltar:hover {
+    background-color: #3a7acc;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Títulos e Parágrafos */
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+}
+
+p {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+/* Botões */
 button {
-    background-color: #dfdfdf;
-    color: #333;
-    border: 1px solid #000000;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
     border-radius: 5px;
     padding: 10px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #b4b4b4;
-    color: #333;
-    border: 1px solid #000000;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.Voltar:hover {
-    background-color: rgb(194, 194, 194);
-    padding: 10px;
+    background-color: #3a7acc;
+    color: var(--text-color);
     border: none;
-    cursor: pointer;
 }
 
+/* Caixas de Código e Conteúdo */
 #comando-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgb(233, 233, 233);
-    border: 1px solid #000000;
-    background-color: #3f3f3f;
-    padding: 1px 20px;
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    padding: 10px 20px;
     min-width: 30%;
     max-width: 65vw;
     box-sizing: border-box;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
-#card4 {
-    border: 1px solid #d8d8d8;
-    background-color: #e4e4e4;
-    box-shadow: 3px 3px 6px rgba(29, 29, 29, 0.3);
-    max-width: 30%;
-    font-weight: bold;
+.comando {
+    white-space: pre-wrap;
     font-family: 'Courier New', Courier, monospace;
-    color: rgb(43, 43, 43);
-}
-
-#card2 {
-    border: 1px solid #d8d8d8;
-    background-color: #e4e4e4;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    max-width: 30%;
-    font-weight: bold;
-    font-family: 'Courier New', Courier, monospace;
-    color: rgb(43, 43, 43);
-}
-
-#card2 p {
+    color: var(--text-color);
     margin: 0;
-    padding: 15px;
 }
 
-#card5 {
-    border: 1px solid #d8d8d8;
-    background-color: #e4e4e4;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+.copiar {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.copiar i {
+    color: var(--text-secondary-color);
+    transition: color 0.3s ease;
+}
+
+.copiar:hover i {
+    color: var(--primary-color);
+}
+
+#card4, #card2, #card5 {
+    border: 1px solid var(--surface-color);
+    background-color: var(--surface-color);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
     max-width: 30%;
-    padding: 10px;
-    color: rgb(43, 43, 43);
+    padding: 15px;
+    border-radius: 8px;
+    color: var(--text-color);
+    margin-bottom: 20px;
 }
 
+#card4 ul, #card2 p, #card5 p {
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+#card4 ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#card4 li {
+    margin: 5px 0;
+}
+
+/* Imagens */
+.login {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    margin: 20px 0;
+}
+
+/* Rodapé */
 footer {
     display: flex;
     justify-content: center;
-    background-color: #d6d6d6;
+    background-color: var(--surface-color);
+    width: 100%;
+    /* padding: 15px 0; */
+    box-sizing: border-box;
+    border-top: 1px solid #3a3a3a;
 }
 
 footer p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-secondary-color);
 }
 
 footer div {
@@ -136,19 +192,48 @@ footer div {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
-.github {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github, .Linkedin {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
 }
 
-.Linkedin {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github:hover, .Linkedin:hover {
+    transform: scale(1.5);
+}
+
+/* Responsividade (já existente) */
+@media (max-width: 768px) {
+    #container {
+        grid-template-columns: 1fr;
+    }
+
+    #sidebar-esquerda {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: #ff2828;
+        border-bottom: 1px solid #3a3a3a;
+    }
+
+    .Voltar {
+        width: 100%;
+        margin: 0;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    #comando-container, #card2, #card4, #card5 {
+        max-width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
 }

@@ -13,21 +13,22 @@ window.onload = function () {
     document.querySelectorAll(".Versao").forEach(el => el.textContent = Versao);
   };
 
-  function copiarComando(indice) {
-  const comandos = document.querySelectorAll(".comando");
-  const botoes = document.querySelectorAll(".copiar");
-  const comando = comandos[indice];
-  const botao = botoes[indice+1];
-  const texto = comando.innerText || comando.textContent;
-  navigator.clipboard.writeText(texto);
-  const icone = botao.querySelector("i");
-  if (icone) {
-    icone.classList.remove("fa-copy");
-    icone.classList.add("fa-check");
+  function copiarComando(botaoClicado) {
+    const comandoContainer = botaoClicado.closest("#comando-container");
+    const comando = comandoContainer.querySelector(".comando");
+    const texto = comando.innerText || comando.textContent;
+    
+    navigator.clipboard.writeText(texto);
 
-    setTimeout(() => {
-      icone.classList.remove("fa-check");
-      icone.classList.add("fa-copy");
-    }, 500);
-  }
+    const icone = botaoClicado.querySelector("i");
+    if (icone) {
+        icone.classList.remove("fa-copy");
+        icone.classList.add("fa-check");
+
+        setTimeout(() => {
+            icone.classList.remove("fa-check");
+            icone.classList.add("fa-copy");
+        }, 500);
+    }
 }
+

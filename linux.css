@@ -1,144 +1,170 @@
-button {
-    display: flex;
-    justify-content: right;
-    padding: 9px;
+:root {
+    --primary-color: #4a90e2; /* Azul vibrante */
+    --background-color: #1a1a1a; /* Fundo escuro principal */
+    --surface-color: #2c2c2c; /* Superfícies um pouco mais claras que o fundo */
+    --text-color: #f0f0f0; /* Texto claro para fundo escuro */
+    --text-secondary-color: #a0a0a0; /* Texto secundário para contraste */
 }
 
+/* Base e Layout */
 body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 #container {
     display: grid;
-    grid-template-columns: 15% 73% 12%;
+    grid-template-columns: 10% 80% 10%;
     min-height: 100vh;
 }
 
-nav#sidebar-esquerda img {
-    width: 120px;
-    height: 127px;
-    margin-top: 10px;
+main {
+    background-color: var(--background-color);
+    padding: 40px;
 }
 
-nav#sidebar-esquerda {
+#sidebar-esquerda {
+    background-color: var(--surface-color);
     padding: 20px;
     position: sticky;
     top: 0;
+    border-bottom: 1px solid #3a3a3a;
     height: 100vh;
+    border-right: 1px solid #3a3a3a;
 }
 
-nav#sidebar-esquerda ul {
-    margin-top: 20px;
-    padding: 5px;
-}
-
-nav#sidebar-esquerda li {
-    margin-bottom: 20px;
-    list-style-type: none;
-}
-
-nav#sidebar-esquerda li:hover {
-    color: rgb(0, 81, 255);
-}
-
-nav#sidebar-esquerda a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-}
-
-nav#sidebar-esquerda a:hover {
-    color: rgb(0, 38, 255);
-}
-
-h3 {
-    font-size: 25px;
-}
-
-h4 {
-    font-size: 16px;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.comando {
-     white-space: nowrap;
-     padding-bottom: 5px;
-     font-family: 'Courier New', Courier, monospace;
-}
-
-.copiar {
-  margin-left: 10px;
-}
-
-button {
+#sidebar-esquerda button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
     border: none;
-}
-
-button:hover {
-    background-color: rgb(214, 214, 214);
-    padding: 9px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
 }
 
+#sidebar-esquerda button:hover {
+    background-color: #3a7acc;
+}
+
+/* Títulos e Parágrafos */
+h1, h2, h3, h4 {
+    color: var(--primary-color);
+}
+
+p {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+strong {
+    color: var(--primary-color);
+}
+
+/* Cards e Seções de Comando */
 #comando-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgb(0, 197, 0);
-    border: 1px solid #000000;
-    background-color: #3f3f3f;
-    padding: 1px 20px;
+    color: var(--text-color);
+    background-color: var(--surface-color);
+    padding: 10px 20px;
     min-width: 30%;
     max-width: 70vw;
     box-sizing: border-box;
+    border-radius: 8px;
+    border: 1px solid #3a3a3a;
+}
+
+.comando {
+    white-space: pre-wrap;
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-color);
+    margin: 0;
+    flex-grow: 1;
+}
+
+.copiar {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.copiar:hover {
+    background-color: #3a3a3a;
+}
+
+.copiar i {
+    color: var(--text-secondary-color);
+    transition: color 0.3s ease;
+}
+
+.copiar:hover i {
+    color: var(--primary-color);
+}
+
+#card, #card3, #card4 {
+    border: 1px solid var(--surface-color);
+    background-color: var(--surface-color);
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+    padding: 15px;
+    border-radius: 8px;
+    color: var(--text-color);
+    margin-bottom: 20px;
 }
 
 #card {
-    border: 1px solid #d8d8d8;
-    background-color: #e4e4e4;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    max-width: 30%;
-    padding: 10px;
-    color: rgb(43, 43, 43);
+    max-width: 50%;
 }
 
 #card3 {
-    border: 1px solid #d8d8d8;
-    background-color: #eee;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
     width: 25%;
-    padding: 20px;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    color: rgb(0, 126, 0);
+    color: var(--primary-color);
 }
 
 #card4 {
-    border: 1px solid #d8d8d8;
-    background-color: #eee;
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-    max-width: 30%;
+    max-width: 35%;
     font-weight: bold;
     font-family: 'Courier New', Courier, monospace;
-    color: green;
+    color: var(--primary-color);
 }
 
+#card4 ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#card4 li {
+    margin: 5px 0;
+}
+
+/* Rodapé e Ícones */
 footer {
     display: flex;
     justify-content: center;
-    background-color: #d6d6d6;
+    background-color: var(--surface-color);
     width: 100%;
-    /* padding: 7px 0; */
+    /* padding: 15px 0; */
     box-sizing: border-box;
+    border-top: 1px solid #3a3a3a;
+    color: var(--text-secondary-color);
 }
 
 footer p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: var(--text-secondary-color);
+    font-size: 0.9em;
 }
 
 footer div {
@@ -153,19 +179,65 @@ footer div {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
 }
 
-.github {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github, .Linkedin {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s ease;
 }
 
-.Linkedin {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    height: 20px;
+.github:hover, .Linkedin:hover {
+    transform: scale(1.1);
+}
+
+/* Imagens */
+.login {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    margin: 20px 0;
+}
+
+/* Responsividade (já existente) */
+/* As media queries originais foram mantidas,
+   mas é recomendado revisar para a nova paleta de cores. */
+@media (max-width: 768px) {
+    #container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+    }
+
+    #sidebar-esquerda {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #3a3a3a;
+    }
+
+    #sidebar-esquerda button {
+        width: 100%;
+        margin: 0;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    #card, #card3, #card4 {
+        max-width: 100%;
+        width: auto;
+    }
+
+    #comando-container {
+        max-width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+    }
 }

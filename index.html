@@ -12,7 +12,9 @@
 <body>
   <div id="container">
     <nav id="sidebar-esquerda">
-        <img src="capriccheIcon.png" alt="logoCapricche" class="logo">
+        <a href="https://capricche.com.br/">
+          <img src="capriccheIcon.png" alt="logoCapricche" class="logo">
+        </a>
       <div class="lista">
         <ul>
           <li><a href="#escopo">Objetivo</a></li>
@@ -51,8 +53,8 @@
 
         <h4>3.1. Instalação do ThingsBoard (Apenas no Servidor Primário)</h4>
         <p>Instale o ThingsBoard no servidor que você designou como Primário. Para instruções detalhadas, consulte a documentação oficial do ThingsBoard.</p>
-        <p>Instalação via <a href="https://thingsboard.io/docs/user-guide/install/windows/">Windows</a></p>
-        <p>Instalação via <a href="https://thingsboard.io/docs/user-guide/install/ubuntu/">Linux</a></p>
+        <p>Instalação via <a id="link" href="https://thingsboard.io/docs/user-guide/install/windows/">Windows</a></p>
+        <p>Instalação via <a id="link" href="https://thingsboard.io/docs/user-guide/install/ubuntu/">Linux</a></p>
         <p id="OBS">(Seguindo a instalação LINUX, nela mesma já tem a instalação do postgresql e você pode pular para o item “3.3.” deste documento. Se optar pelo Windows, siga ao próximo passo.).</p>
         <p id="OBS">OBS: SEMPRE anote suas senhas e para onde elas servem.</p>
 
@@ -60,7 +62,7 @@
         <p>Instale o PostgreSQL em ambos os servidores (Primário e Réplica).</p>
         <p>Importante: Use a mesma versão principal do PostgreSQL em ambas as máquinas.</p>
         <p><strong>Instruções para Windows:</strong></p>
-        <p>Acesse o site oficial: <a href="https://www.postgresql.org/download/windows/">Link</a></p>
+        <p>Acesse o site oficial: <a id="link" href="https://www.postgresql.org/download/windows/">Link</a></p>
         <p>Durante a instalação, ele pedirá para você definir uma senha para o superusuário postgres. CRIE UMA SENHA FORTE, ANOTE-A E GUARDE-A.</p>
         <div class="lembreteCard">
           <p><i class="fa-solid fa-triangle-exclamation"></i>LEMBRE<i class="fa-solid fa-triangle-exclamation"></i> </p>
@@ -69,7 +71,7 @@
 
         <h4>3.3. Instalação do DBeaver (Altamente Recomendado)</h4>
         <p>Instale o DBeaver em pelo menos uma das máquinas (recomendado: máquina primária).</p>
-        <p>Download: <a href="https://dbeaver.io/download/">Link</a></p>
+        <p>Download: <a id="link" href="https://dbeaver.io/download/">Link</a></p>
       </section>
 
       <section id="informacoes">
