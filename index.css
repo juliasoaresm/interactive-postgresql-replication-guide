@@ -104,6 +104,7 @@ main {
     cursor: pointer;
     background-color: #3a3a3a; 
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+    transform: scale(1.1);
 }
 
 #GPSERS, #INSTITUTO, #STARTUP, #CLOUDMASTER { 
@@ -144,10 +145,14 @@ nav#sidebar-esquerda li {
 }
 
 .logo {
-    width: 110px;
-    height: 120px;
+    width: 130px;
+    height: 140px;
     display: block;
     margin: 0 auto 20px auto;
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }
 
 nav#sidebar-esquerda li:hover {
@@ -277,14 +282,14 @@ footer div.footer {
     margin-top: 10px;
 }
 
-.github, .Linkedin { 
-    width: 24px; 
+.github, .Linkedin {
+    width: 24px;
     height: 24px;
     transition: transform 0.2s ease;
 }
 
 .github:hover, .Linkedin:hover {
-    transform: scale(1.1);
+    transform: scale(1.4);
 }
 
 

@@ -139,6 +139,10 @@ button:hover {
     margin-bottom: 20px;
 }
 
+#card2:hover {
+    transform: scale(1.4);
+}
+
 #card4 ul, #card2 p, #card5 p {
     color: var(--text-color);
     margin: 0;
@@ -202,7 +206,7 @@ footer div {
 }
 
 .github:hover, .Linkedin:hover {
-    transform: scale(1.5);
+    transform: scale(1.4);
 }
 
 /* Responsividade (já existente) */
