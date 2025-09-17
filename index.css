@@ -315,6 +315,10 @@ footer div.footer {
         padding: 10px;
     }
 
+    #sidebar-direita {
+        overflow: scroll;
+    }
+
     .card2 {
         width: 150px; /* Ajuste para caber 3 colunas, se necessário */
         padding: 8px;
