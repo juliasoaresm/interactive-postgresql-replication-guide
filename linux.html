@@ -90,7 +90,7 @@
             <li>listen_addresses = '*'</li>
             <li>wal_level = replica</li>
             <li>max_wal_senders = 10</li>
-            <li>wal_keep_size = 256</li>
+            <li>wal_keep_size = 2048MB</li>
              </ul>
              </div>
        </section>
@@ -99,7 +99,7 @@
         <p>Editar Arquivo pg_hba.conf (Arquivo de configurações padrão do postgres)</p>
         <p>Comando para abrir (Linux): </p>
         <div id="comando-container">
-        <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/ppg_hba.conf</p>
+        <p class="comando">sudo nano /etc/postgresql/<span class="Versao"></span>/main/pg_hba.conf</p>
         <button class="copiar" onclick="copiarComando(this)">
         <i class="fa-solid fa-copy"></i>
         </button>
