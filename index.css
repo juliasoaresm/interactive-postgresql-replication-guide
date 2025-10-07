@@ -1,9 +1,9 @@
 :root {
-    --primary-color: #4a90e2; /* Azul vibrante */
-    --background-color: #1a1a1a; /* Fundo escuro principal */
-    --surface-color: #2c2c2c; /* Superfícies um pouco mais claras que o fundo */
-    --text-color: #f0f0f0; /* Texto claro para fundo escuro */
-    --text-secondary-color: #a0a0a0; /* Texto secundário para contraste */
+    --primary-color: #4a90e2; /* Azul */
+    --background-color: #1a1a1a; /* Fundo principal */
+    --surface-color: #2c2c2c; /* Superfícies mais claras que o fundo */
+    --text-color: #f0f0f0; /* Texto para fundo escuro */
+    --text-secondary-color: #a0a0a0; /* Texto secundário pra contraste */
 }
 
 body {
@@ -115,6 +115,10 @@ main {
     object-fit: contain; 
     background-color: var(--background-color);
     padding: 5px;
+}
+
+#GPSERS {
+    background-color: rgb(26, 30, 78);
 }
 
 #FACEPE, #IFPE {
@@ -316,7 +320,7 @@ footer div.footer {
     }
 
     #sidebar-direita {
-        overflow: scroll;
+        overflow-y: auto;
     }
 
     .card2 {
@@ -366,25 +370,25 @@ footer div.footer {
     }
 
     nav#sidebar-esquerda, nav#sidebar-direita {
-        position: relative; /* Remove sticky */
-        height: auto; /* Altura automática */
+        position: relative;
+        height: auto; 
         border-right: none;
         border-left: none;
         padding: 15px;
     }
 
     nav#sidebar-esquerda {
-        order: 1; /* Sidebar esquerda primeiro no mobile */
+        order: 1;
         border-bottom: 1px solid #3a3a3a;
     }
 
     main#conteudo {
-        order: 2; /* Conteúdo principal no meio */
+        order: 2; 
         padding: 20px;
     }
 
     nav#sidebar-direita {
-        order: 3; /* Sidebar direita antes do footer */
+        order: 3; 
         border-top: 1px solid #3a3a3a;
     }
 
@@ -393,8 +397,8 @@ footer div.footer {
     }
 
     nav#sidebar-esquerda ul {
-        display: flex; /* Transforma a lista de links em linha */
-        flex-wrap: wrap; /* Quebra em múltiplas linhas se necessário */
+        display: flex;
+        flex-wrap: wrap; 
         justify-content: center;
         margin-top: 10px;
     }
@@ -404,19 +408,19 @@ footer div.footer {
     }
 
     .lembreteCard {
-        width: 80%; /* Mais largura para o card em telas pequenas */
+        width: 80%;
         margin: 15px auto;
     }
 
     .cardsParceiros {
-        flex-direction: row; /* Cards de parceiros em linha */
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
     }
 
     .card2 {
-        width: 100px; /* Reduz o tamanho dos cards de parceiro */
+        width: 100px;
         padding: 5px;
     }
 
@@ -427,12 +431,12 @@ footer div.footer {
     }
 
     footer .information {
-        order: 2; /* Informações embaixo no footer mobile */
+        order: 2; 
         margin-top: 10px;
     }
 
     footer .icons {
-        order: 1; /* Ícones em cima no footer mobile */
+        order: 1;
         margin-bottom: 10px;
     }
 }

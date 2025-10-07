@@ -1,3 +1,11 @@
+/* ========================================================== */
+/* --- 1. CONFIGURAÇÃO GLOBAL DE BOX-SIZING E LAYOUT BASE --- */
+/* ========================================================== */
+*, *::before, *::after {
+    /* ESSENCIAL: Garante que padding e border sejam contados DENTRO da largura do elemento */
+    box-sizing: border-box;
+}
+
 :root {
     --primary-color: #4a90e2;
     --background-color: #1a1a1a;
@@ -7,22 +15,23 @@
 }
 
 /* Base e Layout */
-body {
+body, html {
     margin: 0;
     padding: 0;
-    height: 100%; /* Corrigido para garantir o alinhamento */
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* Adicionado para cortar qualquer excesso invisível que force o scroll */
+    overflow-x: hidden; 
 }
 
 #container {
     display: grid;
-    grid-template-columns: 10% 80% 10%;
-    /* min-height: 100vh;  */
+    /* Ajustei para 180px na sidebar e o restante no main, e 20px de coluna vazia à direita */
+    grid-template-columns: 180px 1fr 20px; 
     flex: 1;
 }
 
@@ -35,28 +44,27 @@ main {
 #sidebar-esquerda {
     background-color: var(--surface-color);
     padding: 20px;
-    /* position: sticky; */
-    /* top: 0; */
-    /* height: 100%; */
     border-right: 1px solid #3a3a3a;
-    border-bottom: 1px solid #3a3a3a;
+    /* Removido o border-bottom, pois ele se junta ao main e quebra o grid visualmente */
 }
 
 .Voltar {
     border: none;
-    width: 60px;
-    height: 40px;
-    margin: 10px;
+    /* Removido width e height fixos, usamos padding */
+    padding: 10px 20px;
+    /* Ajustado para preencher a largura total da sidebar */
+    width: 100%; 
+    margin: 0;
     background-color: var(--primary-color);
     color: var(--text-color);
     border-radius: 5px;
     font-weight: bold;
+    display: block; /* Garante que ocupe a largura total */
 }
 
 .Voltar:hover {
     background-color: #3a7acc;
-    padding: 10px;
-    border: none;
+    padding: 10px 20px; /* Mantém o padding no hover */
     cursor: pointer;
 }
 
@@ -74,22 +82,6 @@ strong {
     color: var(--primary-color);
 }
 
-/* Botões */
-button {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #3a7acc;
-    color: var(--text-color);
-    border: none;
-}
-
 /* Caixas de Código e Conteúdo */
 #comando-container {
     display: flex;
@@ -98,11 +90,10 @@ button:hover {
     color: var(--text-color);
     background-color: var(--surface-color);
     padding: 10px 20px;
-    min-width: 30%;
-    max-width: 65vw;
-    box-sizing: border-box;
-    border: 1px solid #3a3a3a;
+    /* Reduzido o max-width para 80% do conteúdo no desktop */
+    max-width: 80%; 
     border-radius: 8px;
+    border: 1px solid #3a3a3a;
     margin-bottom: 15px;
 }
 
@@ -111,12 +102,17 @@ button:hover {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-color);
     margin: 0;
+    /* Garante a quebra de comandos longos */
+    overflow-wrap: break-word; 
+    flex-grow: 1;
 }
 
 .copiar {
     margin-left: 10px;
     background-color: transparent;
     border: none;
+    /* Impede que o botão de cópia encolha no mobile */
+    flex-shrink: 0; 
 }
 
 .copiar i {
@@ -128,11 +124,12 @@ button:hover {
     color: var(--primary-color);
 }
 
-#card4, #card2, #card5 {
+#card4, #card2, #card5, #card { /* Adicionei #card aqui para o troubleshooting */
     border: 1px solid var(--surface-color);
     background-color: var(--surface-color);
     box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-    max-width: 30%;
+    /* Aumentei a largura máxima no desktop para não ficar muito estreito */
+    max-width: 40%; 
     padding: 15px;
     border-radius: 8px;
     color: var(--text-color);
@@ -140,7 +137,8 @@ button:hover {
 }
 
 #card2:hover {
-    transform: scale(1.4);
+    /* Removido o hover scale de 1.4 - é muito agressivo e pode quebrar o layout */
+    transform: none;
 }
 
 #card4 ul, #card2 p, #card5 p {
@@ -174,22 +172,23 @@ footer {
     justify-content: center;
     background-color: var(--surface-color);
     width: 100%;
-    /* padding: 15px 0; */
-    box-sizing: border-box;
     border-top: 1px solid #3a3a3a;
+    padding: 10px 0; /* Adicionado padding para separar o texto */
 }
 
 footer p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text-secondary-color);
+    margin: 5px 0;
 }
 
-footer div {
+footer div.footer { /* Usei .footer para ser mais específico */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 5px;
+    width: 100%;
 }
 
 .icons {
@@ -209,35 +208,50 @@ footer div {
     transform: scale(1.4);
 }
 
-/* Responsividade (já existente) */
+/* ========================================================== */
+/* --- RESPONSIVIDADE PARA TABLETS E MOBILE (< 768px) --- */
+/* ========================================================== */
 @media (max-width: 768px) {
     #container {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Uma única coluna */
     }
 
     #sidebar-esquerda {
         position: relative;
         height: auto;
         border-right: none;
-        border-bottom: #ff2828;
         border-bottom: 1px solid #3a3a3a;
+        padding: 15px;
     }
-
+    
     .Voltar {
         width: 100%;
         margin: 0;
+        padding: 10px;
     }
 
     main {
-        padding: 20px;
+        padding: 20px; /* Padding confortável para mobile */
+    }
+    
+    /* CORREÇÃO DOS CARDS: Garante largura total sem quebrar */
+    #comando-container, 
+    #card, #card2, #card4, #card5 {
+        max-width: 100%; /* Largura máxima é 100% do main */
+        width: 100%;     /* Ocupa todo o espaço */
     }
 
-    #comando-container, #card2, #card4, #card5 {
-        max-width: 100%;
+    #comando-container {
+        /* Reduz o padding horizontal para sobrar mais espaço para o código */
+        padding: 10px 10px; 
     }
 
-    footer {
-        flex-direction: column;
+    .comando {
+        font-size: 0.9em; 
+        word-break: break-all; /* Força a quebra de comandos longos */
+    }
+    
+    footer .footer {
         text-align: center;
     }
 }

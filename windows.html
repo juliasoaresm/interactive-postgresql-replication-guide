@@ -111,7 +111,7 @@
             <li>listen_addresses = '*'</li>
             <li>wal_level = replica</li>
             <li>max_wal_senders = 10</li>
-            <li>wal_keep_size = 256</li>
+            <li>wal_keep_size = 256MB (se o seu banco de dados for muito robusto, aumente conforme necessário. Ex: 90GB de dados = 4056MB)</li>
              </ul>
              </div>
            </section>
@@ -272,7 +272,84 @@
   
           <p>Se você vir o dado na Réplica, sua configuração está funcionando perfeitamente!</p>
 </section>
-        
+        <section>
+     <h2>6. Solução de Problemas Comuns (Troubleshooting)</h2>
+    <p>Encontrou um erro? Esta seção lista os problemas mais frequentes e suas soluções exatas. Use-a se a replicação não iniciar ou o status não for "streaming".</p>
+            
+       <h4>Problema 6.1: Conexão Recusada devido à String de Conexão Complexa</h4>
+    <p   >A replicação falha ou a Réplica não consegue conectar, mesmo com todas as configurações parecendo corretas.</p>
+      <div id="card">
+       <p><strong>Causa:</strong> A *connection string* no arquivo postgresql.conf</code> da Réplica (gerada pelo pg_basebackup</code> ou editada manualmente) está muito longa e contém parâmetros desnecessários de segurança (SSL, GSSAPI) que causam falha na negociação de autenticação.</p>
+       <p><strong>Solução (Melhor Prática):</strong> Edite o postgresql.conf</code> da Réplica e simplifique a string primary_conninfo</code> para o essencial: <strong>host, port, user e password</strong>.</p>
+       </div>
+       <p>Comando para abrir o arquivo na Réplica (Linux):</p>
+       <div id="comando-container">
+      <p class="comando">sudo nano /var/lib/postgresql/<span class="Versao"></span>/main/postgresql.conf</p>
+       <button class="copiar" onclick="copiarComando(this)">
+      <i class="fa-solid fa-copy"></i>
+       </button>
+      </div>
+       <p>No arquivo, edite a linha primary_conninfo</code> para o formato abaixo e <strong>REINICIE o serviço</strong>.</p>
+       <div id="comando-container">
+       <p class="comando">primary_conninfo = 'host=<span class="ipPrimario"></span> port=5432 user=<span class="nomeUsuario"></span> password=<span class="senhaReplicacao"></span>'</p>
+      <button class="copiar" onclick="copiarComando(this)">
+       <i class="fa-solid fa-copy"></i>
+       </button>
+       </div>  
+       
+      <h4>Problema 6.2: Erro de Permissão do Sistema (SUDOERS)</h4>  
+     <p>Ao usar comandos como sudo</code> ou sudo -u postgres</code>, o terminal retorna <strong>[usuário] is not in the sudoers file.</code></strong></p>
+       <div id="card">
+        <p><strong>Causa:</strong> Seu usuário não possui privilégios de administrador (sudo</code>) para executar o comando. Essa permissão é fundamental para gerenciar o serviço PostgreSQL.</p>
+        <p><strong>Solução:</strong> Adicione seu usuário ao grupo sudo</code>. Após rodar o comando, você deve <strong>reiniciar o terminal ou fazer logoff/login</strong> para que a alteração tenha efeito.</p>
+    </div>
+      <p>Comando para adicionar o usuário ao grupo sudo:</p>
+      <div id="comando-container">
+      <p class="comando">sudo usermod -aG sudo [seu_usuario]</p>
+       <button class="copiar" onclick="copiarComando(this)">
+      <i class="fa-solid fa-copy"></i>
+       </button>
+       </div>
+     
+       <h4>Problema 6.3: "Connection Refused" ou "Timeout"</h4>
+       <p>O pg_basebackup falha ou o Servidor Réplica não consegue se conectar ao Primário. (Verifique se o firewall é o problema antes de seguir para a próxima solução).</p>
+       <div id="card">
+      <p><strong>Causa 1: Firewall.</strong> O firewall do Primário (UFW, iptables, etc.) está bloqueando a porta **5432**.</p>
+      <p><strong>Solução 1:</strong> Libere a porta no Primário.</p>
+       </div>
+       <p>Comando para liberar a porta no Primário (Ex: UFW):</p>
+       <div id="comando-container">
+       <p class="comando">sudo ufw allow 5432/tcp</p>
+       <button class="copiar" onclick="copiarComando(this)">
+       <i class="fa-solid fa-copy"></i>
+      </button>
+       </div>
+       <div id="card">
+       <p><strong>Causa 2: `listen_addresses`.</strong> O PostgreSQL no Primário não está configurado para "escutar" conexões externas.</p>
+       <p><strong>Solução 2:</strong> Edite o postgresql.conf</code> do Primário e defina: listen_addresses = '*'</code>. Você deve **reiniciar** o serviço após essa mudança (sudo systemctl restart postgresql</code>).</p>
+       </div>
+     
+       <h4>Problema 6.4: Replicação Atrasada ou Parada (WALs Não Encontrados)</h4>
+       <p>A replicação começa, mas para depois de um tempo ou retorna erros como <strong>"could not find block..."</strong> ou <strong>"no more WAL segments"</strong>.</p>
+       <div id="card">
+      <p><strong>Causa:</strong> O Servidor Primário está reciclando os arquivos de log (WALs) muito rápido (o `wal_keep_size` é pequeno demais), antes que o Réplica consiga processá-los.</p>
+       <p><strong>Solução:</strong> **Aumente o valor do `wal_keep_size`** no arquivo postgresql.conf</code> do Primário. Se o volume for muito grande, aumente ainda mais (ex: 4096MB). </p>
+       <p><strong>Causa 2: `wal_level` Inválido.</strong> O parâmetro não foi definido ou o serviço não foi reiniciado. **Solução:** No postgresql.conf</code> do Primário, verifique se está **wal_level = replica</code>** e **REINICIE o PostgreSQL**. </p>
+        </div>
+       <h4>Problema 6.5: Acesso Negado ao Primário (Falha no `pg_basebackup`)</h4>
+        <p>O Primário rejeita a conexão do usuário replicador, mesmo com a senha correta.</p>
+        <div id="card">
+      <p><strong>Causa:</strong> O Servidor Primário não tem a linha de permissão para o IP da Réplica no arquivo **pg_hba.conf</code>**. Ou você não reiniciou o serviço do PostgreSQL após a edição.</p>
+       <p><strong>Solução:</strong> Garanta que a linha de permissão (`host replication [usuário] [IP/CIDR] md5`) esteja no final do pg_hba.conf</code> do Primário. Depois, **REINICIE o serviço do PostgreSQL** para que as novas regras entrem em vigor.</p>
+        </div>
+        <p>Comando para reiniciar o serviço no Primário (obrigatório após editar o `pg_hba.conf`):</p>
+        <div id="comando-container">
+       <p class="comando">sudo systemctl restart postgresql</p>
+       <button class="copiar" onclick="copiarComando(this)">
+        <i class="fa-solid fa-copy"></i>
+          </button>
+          </div>
+      </section>
         <section>
           <h3>Fazendo a Conexão no DBeaver (Visualização Recomendada)</h3>
           <p>Para verificar se a replicação está funcionando, o ideal é ter tanto o banco de dados original (Primário) quanto o espelho (Réplica) visíveis no DBeaver. Siga os passos abaixo.</p>
