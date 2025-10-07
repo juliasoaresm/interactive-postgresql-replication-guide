@@ -1,3 +1,10 @@
+/* ========================================================== */
+/* --- 1. CONFIGURAÇÃO GLOBAL DE BOX-SIZING --- */
+/* ========================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --primary-color: #4a90e2; /* Azul vibrante */
     --background-color: #1a1a1a; /* Fundo escuro principal */
@@ -14,11 +21,13 @@ body, html {
     font-family: Arial, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
+    /* GARANTE QUE NENHUM CONTEÚDO INVISÍVEL FORÇE A ROLAGEM HORIZONTAL */
+    overflow-x: hidden; 
 }
 
 #container {
     display: grid;
-    grid-template-columns: 10% 80% 10%;
+    grid-template-columns: 200px 1fr 50px; 
     min-height: 100vh;
 }
 
@@ -27,12 +36,15 @@ main {
     padding: 40px;
 }
 
+nav#sidebar-direita {
+    display: none; 
+}
+
 #sidebar-esquerda {
     background-color: var(--surface-color);
     padding: 20px;
     position: sticky;
     top: 0;
-    border-bottom: 1px solid #3a3a3a;
     height: 100vh;
     border-right: 1px solid #3a3a3a;
 }
@@ -46,8 +58,8 @@ main {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    display: flex;
-    justify-content: center;
+    display: block; 
+    width: 100%;
 }
 
 #sidebar-esquerda button:hover {
@@ -76,11 +88,10 @@ strong {
     color: var(--text-color);
     background-color: var(--surface-color);
     padding: 10px 20px;
-    min-width: 30%;
-    max-width: 70vw;
-    box-sizing: border-box;
+    max-width: 90%; 
     border-radius: 8px;
     border: 1px solid #3a3a3a;
+    margin-bottom: 15px;
 }
 
 .comando {
@@ -89,6 +100,7 @@ strong {
     color: var(--text-color);
     margin: 0;
     flex-grow: 1;
+    overflow-wrap: break-word;
 }
 
 .copiar {
@@ -97,6 +109,7 @@ strong {
     cursor: pointer;
     margin-left: 10px;
     padding: 5px;
+    flex-shrink: 0; 
 }
 
 .copiar:hover {
@@ -151,28 +164,29 @@ strong {
 
 /* Rodapé e Ícones */
 footer {
+    grid-column: 1 / -1; 
     display: flex;
     justify-content: center;
     background-color: var(--surface-color);
     width: 100%;
-    /* padding: 15px 0; */
-    box-sizing: border-box;
     border-top: 1px solid #3a3a3a;
     color: var(--text-secondary-color);
+}
+
+footer .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
 }
 
 footer p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: var(--text-secondary-color);
     font-size: 0.9em;
-}
-
-footer div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
+    margin: 5px 0;
 }
 
 .icons {
@@ -202,42 +216,57 @@ footer div {
     margin: 20px 0;
 }
 
-/* Responsividade (já existente) */
-/* As media queries originais foram mantidas,
-   mas é recomendado revisar para a nova paleta de cores. */
-@media (max-width: 768px) {
+
+/* ========================================================== */
+/* --- RESPONSIVIDADE PARA NOTEBOOKS (< 1280px) --- */
+/* ========================================================== */
+
+@media (max-width: 1280px) {
     #container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-    }
-
-    #sidebar-esquerda {
-        position: relative;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #3a3a3a;
-    }
-
-    #sidebar-esquerda button {
-        width: 100%;
-        margin: 0;
+        grid-template-columns: 180px 1fr 20px;
     }
 
     main {
-        padding: 20px;
+        padding: 30px;
+    }
+}
+
+
+/* ========================================================== */
+/* --- RESPONSIVIDADE PARA TABLETS E MOBILE (< 768px) --- */
+/* ========================================================== */
+
+@media (max-width: 768px) {
+    #container {
+        grid-template-columns: 1fr; 
+        grid-template-rows: auto 1fr auto; 
     }
 
+    #sidebar-esquerda {
+        position: relative; 
+        height: auto; 
+        border-right: none;
+        border-bottom: 1px solid #3a3a3a;
+        padding: 15px;
+    }
+
+    main {
+        padding: 20px; /* Padding ajustado para mobile */
+    }
+
+    /* CORREÇÃO DOS CARDS: Define largura total para ocupar 100% do espaço */
+    #comando-container, 
     #card, #card3, #card4 {
-        max-width: 100%;
-        width: auto;
+        max-width: 100%; 
+        width: 100%;
     }
-
+    
     #comando-container {
-        max-width: 100%;
+        padding: 10px 10px; 
     }
 
-    footer {
-        flex-direction: column;
-        text-align: center;
+    .comando {
+        font-size: 0.9em; 
+        word-break: break-all; 
     }
 }
