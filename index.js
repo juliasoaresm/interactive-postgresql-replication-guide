@@ -15,6 +15,8 @@ function salvar() {
 
         setTimeout(() => {
                 salvo.innerText = "Salvar";
+                alert("Informações salvas com sucesso!");
         }, 500);
     }
 }
+// Este projeto é educacional. Em aplicações reais, evite armazenar dados sensíveis no localStorage.

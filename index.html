@@ -12,8 +12,8 @@
 <body>
   <div id="container">
     <nav id="sidebar-esquerda">
-        <a href="https://capricche.com.br/">
-          <img src="capriccheIcon.png" alt="logoCapricche" class="logo">
+        <a href="https://www.postgresql.org/">
+          <img src="postgresql.png" alt="logoPostgres" class="logo">
         </a>
       <div class="lista">
         <ul>
@@ -32,7 +32,7 @@
 
       <section id="escopo">
         <h3>1. Objetivo</h3>
-        <p>Este documento fornece um guia passo a passo para configurar uma replicação streaming do PostgreSQL. O objetivo é criar um "Banco de Dados Espelho" (Servidor Réplica) que seja uma cópia em tempo real do banco de dados principal (Servidor Primário), utilizado pela plataforma ThingsBoard.</p>
+        <p>Este guia interativo fornece um passo a passo para configurar replicação streaming em tempo real no PostgreSQL, criando um servidor réplica que mantém uma cópia sincronizada do banco de dados primário.</p>
       </section>
 
       <section id="requisitos">
@@ -40,7 +40,7 @@
         <p>Antes de iniciar a instalação, garanta que você atende aos seguintes requisitos:</p>
         <h4>2.1. Infraestrutura:</h4>
         <p>Dois Servidores: Duas máquinas (físicas ou virtuais) distintas.</p>
-        <p>Sistemas Operacionais abordados no guia: Linux (baseado em Debian/Ubuntu) ou Windows.</p>
+        <p>Sistemas Operacionais suportados: distribuições Linux (como Ubuntu/Debian) e Windows.</p>
         <p>Acesso de Administrador: Permissão para instalar softwares e editar configurações em ambos os servidores.</p>
         <h4>2.2. Conectividade de Rede:</h4>
         <p>Os dois servidores devem estar na mesma rede e conseguir se comunicar (um consegue "pingar" o outro). A porta padrão do PostgreSQL, TCP 5432, será configurada no firewall mais adiante.</p>
@@ -123,28 +123,35 @@
     </main>
     <nav id="sidebar-direita">
       <div class="parceiros">
-        <h2>Parceiros</h2>
+        <h2>Ferramentas</h2>
       </div>
       <div class="cardsParceiros">
-        <a id="cardLink" href="https://github.com/gpsers-dexter" target="_blank">
+        <a id="cardLink" href="https://thingsboard.io/" target="_blank">
         <div class="card2">
-            <img id="GPSERS" src="logo.jpg" alt="Google">
-            <h3 class="colab">Parceiro</h3>
-            <p>Laboratório de Pesquisa</p>
+            <img id="GPSERS" src="thingsboard.png" alt="Google">
+            <h3 class="colab">Ferramenta</h3>
+            <p>Thingsboard</p>
         </div>
         </a>
-        <a id="cardLink" href="https://www.facepe.br/" target="_blank">
+        <a id="cardLink" href="https://ubuntu.com/" target="_blank">
         <div class="card2">
-            <img id="FACEPE" src="FACEPEicon.png" alt="Google">
-            <h3 class="colab">Parceiro</h3>
-            <p>FACEPE - Fundação de Amparo à Ciência e Tecnologia de Pernambuco</p>
+            <img id="FACEPE" src="linux.png" alt="Google">
+            <h3 class="colab">Ferramenta</h3>
+            <p>Linux</p>
         </div>
         </a>
-        <a id="cardLink" href="https://portal.ifpe.edu.br/" target="_blank">
+        <a id="cardLink" href="https://ubuntu.com/" target="_blank">
         <div class="card2">
-            <img id="IFPE" src="logo-ifpe.png" alt="Google">
-            <h3 class="colab">Parceiro</h3>
-            <p>Instituto Federal de Pernambuco</p>
+            <img id="FACEPE" src="windows.png" alt="Google">
+            <h3 class="colab">Ferramenta</h3>
+            <p>Windows</p>
+        </div>
+        </a>
+        <a id="cardLink" href="https://dbeaver.io/" target="_blank">
+        <div class="card2">
+            <img id="IFPE" src="DBeaver_logo.png" alt="Google">
+            <h3 class="colab">Ferramenta</h3>
+            <p>DBeaver</p>
         </div>
         </a>
       </div>

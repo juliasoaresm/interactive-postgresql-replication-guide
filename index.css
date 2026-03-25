@@ -122,8 +122,8 @@ main {
 }
 
 #FACEPE, #IFPE {
-    width: 80px;
-    height: 60px;
+    width: 95px;
+    height: 90px;
     border-radius: 20%;
     margin-top: 10px;
 }
@@ -210,6 +210,7 @@ nav#sidebar-direita {
     top: 0;
     height: 100vh;
     box-sizing: border-box;
+    overflow: auto;
 }
 
 h1, h2, h3, h4 {
