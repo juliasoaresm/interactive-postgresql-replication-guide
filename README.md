@@ -1,7 +1,7 @@
-# DocumentationCapricche
-This repository remains the guide for Streaming Replication. Work of Julia Soares Monteiro for Capricche.
-=======
 # PostgreSQL Streaming Replication Guide – Interactive Documentation
+
+## Preview
+![Preview](images/preview.png)
 
 ## About
 This project is an **interactive documentation system** designed to guide users through the setup of **PostgreSQL streaming replication (real-time)**.
